@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static GameData;
+using static GV;
 
 public abstract class Card
 {
     protected eRank mRank;
 
-    protected abstract void OnUse(eRank pRank);
+    protected abstract void OnUse();
 }

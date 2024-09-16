@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using static GameData;
+using static GV;
 
-public class CardManager// : MonoBehaviour
+public class CardManager
 {
     private int mExchange;
     private Card[] mCards;
@@ -23,7 +23,7 @@ public class CardManager// : MonoBehaviour
     }
 
 
-    public void CardManagerInit(eStage pStage)
+    public void CardManagerInit(int pStage)
     {
 
     }
