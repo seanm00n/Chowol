@@ -4,16 +4,24 @@ using System.Runtime.CompilerServices;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using System.IO;
+using System;
 using static GV;
+using UnityEngine.UIElements;
+using Unity.VisualScripting;
+using System.Reflection;
 
-public class TileManager
+public class TileManager : MonoBehaviour
 {
-    private int[,] mTiles;
-    private string[] lines;
-    string file1_1 = Path.Combine(Application.streamingAssetsPath, "1-1.csv");
-    string file1_2 = "1-2.csv";
+    [SerializeReference]
+    GameObject[] gTiles;
 
+    [SerializeReference]
+    Material[] mMaterials;
+
+    public List<eTile> mTiles;
+    public List<int> mBrokens;
     static private TileManager instance;
+    public System.Random rand;
 
     public static TileManager Instance
     {
@@ -27,29 +35,78 @@ public class TileManager
         }
     }
 
-    public  void TileManagerInit(int pSlot, int pStage, int pBlessing) {
-        Debug.Log("tilemanagerinit");
-        lines = File.ReadAllLines(file1_1);
-        mTiles = new int[8, 8];
-        for (int i = 0; i < 8; ++i)
-        {
-            string[] values = lines[i].Split(',');
-            for (int j = 0; j < 8; ++j)
-            {
-                mTiles[i,j] = int.Parse(values[j]);
-            }
-        }
+    private void Awake()
+    {
+        rand = new System.Random();
+        TileManagerInit(0,1,0); // fix
+    }
 
-        Debug.Log(mTiles[7,7]);
+    public  void TileManagerInit(int pSlot, int pStage, int pBlessing)
+    {
+        mTiles = GV.Instance.dpTile[pSlot][pStage];
+        for (int i = 0; i < 64; ++i)
+        {
+            switch (mTiles[i])
+            {
+                case eTile.None:
+                    gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.None];
+                    break;
+                case eTile.norm:
+                    gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.norm];
+                    break;
+                case eTile.spec:
+                    gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.spec];
+                    break;
+                case eTile.dist:
+                    gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.dist];
+                    break;
+                case eTile.brok:
+                    gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.norm];
+                    break;
+                default:
+                    Debug.LogError("Failed to generate tile: " + i);
+                    break;
+            }
+            gTiles[i].gameObject.GetComponent<Tile>().mIndex = i;
+        }
+        
     }
     
-    void GenerateTile()
+    public void GenerateTile(int pIndex, eTile pTile) // chane material
     {
-
+        gTiles[pIndex].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.norm];
+        mTiles[pIndex] = pTile;
     }
 
-    void BreakTile()
+    public void BreakTile(int index)
     {
-
+        switch (mTiles[index])
+        {
+            case eTile.None:
+                break;
+            case eTile.norm:
+                gTiles[index].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.brok];
+                mTiles[index] = eTile.brok;
+                mBrokens.Add(index);
+                Debug.Log("Normal tile break");
+                break;
+            case eTile.spec:
+                gTiles[index].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.brok];
+                mTiles[index] = eTile.brok;
+                mBrokens.Add(index);
+                Debug.Log("Special tile break");
+                // add effects
+                break;
+            case eTile.dist:
+                Debug.Log("Distortion tile break");
+                for (int i = 0; i < 3; ++i)
+                {
+                    //GenerateTile(rand.Next(mBrokens.Count), eTile.norm);
+                    Debug.Log(rand.Next(mBrokens.Count)); // 정상 출력 안됨
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
