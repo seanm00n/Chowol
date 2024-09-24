@@ -22,9 +22,13 @@ public class GV
 
     public enum eRank
     {
-        None, 
+        None, first, second, third
     }
 
+    public enum eCard
+    {
+        storm, thunder, lightning // 마저 작성하기
+    }
     public enum eTile
     {
         None, norm, spec, dist, brok

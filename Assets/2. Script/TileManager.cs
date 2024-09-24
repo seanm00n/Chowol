@@ -9,6 +9,7 @@ using static GV;
 using UnityEngine.UIElements;
 using Unity.VisualScripting;
 using System.Reflection;
+using UnityEngine.Experimental.AI;
 
 public class TileManager : MonoBehaviour
 {
@@ -18,32 +19,23 @@ public class TileManager : MonoBehaviour
     [SerializeReference]
     Material[] mMaterials;
 
-    public List<eTile> mTiles;
-    public List<int> mBrokens;
-    static private TileManager instance;
-    public System.Random rand;
-
-    public static TileManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new TileManager();
-            }
-            return instance;
-        }
-    }
+    private List<eTile> mTiles;
+    private List<int> mBrokens;
+    private System.Random mRand;
+    private int mMaxTiles;
 
     private void Awake()
     {
-        rand = new System.Random();
-        TileManagerInit(0,1,0); // fix
+        TileManagerInit(0,1,0); // 선택한 부위+단계로 수정
     }
 
-    public  void TileManagerInit(int pSlot, int pStage, int pBlessing)
+    private void TileManagerInit(int pSlot, int pStage, int pBlessing)
     {
+        mRand = new System.Random();
+        mBrokens = new List<int>();
         mTiles = GV.Instance.dpTile[pSlot][pStage];
+        mMaxTiles = mTiles.FindAll(tile => tile == eTile.norm).Count;
+
         for (int i = 0; i < 64; ++i)
         {
             switch (mTiles[i])
@@ -55,13 +47,13 @@ public class TileManager : MonoBehaviour
                     gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.norm];
                     break;
                 case eTile.spec:
-                    gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.spec];
+                    Debug.Log("Tile data not verified");
                     break;
                 case eTile.dist:
                     gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.dist];
                     break;
                 case eTile.brok:
-                    gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.norm];
+                    Debug.Log("Tile data not verified");
                     break;
                 default:
                     Debug.LogError("Failed to generate tile: " + i);
@@ -69,12 +61,11 @@ public class TileManager : MonoBehaviour
             }
             gTiles[i].gameObject.GetComponent<Tile>().mIndex = i;
         }
-        
     }
-    
-    public void GenerateTile(int pIndex, eTile pTile) // chane material
+
+    private void ChangeTile(int pIndex, eTile pTile) 
     {
-        gTiles[pIndex].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.norm];
+        gTiles[pIndex].gameObject.GetComponent<Renderer>().material = mMaterials[(int)pTile];
         mTiles[pIndex] = pTile;
     }
 
@@ -95,18 +86,57 @@ public class TileManager : MonoBehaviour
                 mTiles[index] = eTile.brok;
                 mBrokens.Add(index);
                 Debug.Log("Special tile break");
-                // add effects
+                // 특수 타일 효과 추가
                 break;
             case eTile.dist:
                 Debug.Log("Distortion tile break");
                 for (int i = 0; i < 3; ++i)
                 {
-                    //GenerateTile(rand.Next(mBrokens.Count), eTile.norm);
-                    Debug.Log(rand.Next(mBrokens.Count)); // 정상 출력 안됨
+                    if (mBrokens.Count > 0)
+                    {
+                        int randIndex = mRand.Next(mBrokens.Count);
+                        int randItem = mBrokens[randIndex];
+                        ChangeTile(randItem, eTile.norm);
+                        mBrokens.RemoveAt(randIndex);
+                    }
                 }
                 break;
             default:
                 break;
         }
+
+        CheckState();
+        CreateSpec(); // 한 턴에 한번만 수행되도록 수정
     }
+
+    private bool CheckState()
+    {
+        if(mBrokens.Count == mMaxTiles)
+        {
+            // 게임 종료 시 GameManager에서 데이터 취합하도록 수정
+            Debug.Log("Game Set");
+            return true;
+        }
+        return false;
+    }
+
+    private void CreateSpec()
+    { 
+        if (CheckState()) return;
+        int tmp = mTiles.FindIndex(tile => tile == eTile.spec);
+        if (tmp != -1) ChangeTile(mTiles.FindIndex(tile => tile == eTile.spec), eTile.norm);
+        ChangeTile(RandomIndex(ref mTiles), eTile.spec);
+    }
+
+    private int RandomIndex(ref List<eTile> arr)
+    {
+        List<int> tmp = new List<int>();
+        for (int i = 0; i < arr.Count; ++i)
+        {
+            if (arr[i] == eTile.norm) tmp.Add(i);
+        }
+        int randIndex = mRand.Next(tmp.Count);
+        return tmp[randIndex];
+    }
+    
 }
