@@ -478,7 +478,7 @@ GameObject:
   - component: {fileID: 113703106}
   - component: {fileID: 113703105}
   m_Layer: 5
-  m_Name: Q3Text
+  m_Name: Q5Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -536,7 +536,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Q3 Text
+  m_Text: Q5Text
 --- !u!222 &113703106
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -732,8 +732,9 @@ GameObject:
   - component: {fileID: 154326828}
   - component: {fileID: 154326830}
   - component: {fileID: 154326829}
+  - component: {fileID: 154326831}
   m_Layer: 5
-  m_Name: leftQueue
+  m_Name: queue1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -752,13 +753,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1687954095}
-  - {fileID: 1659020408}
   m_Father: {fileID: 546091581}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -70, y: 50}
-  m_SizeDelta: {x: 70, y: 100}
+  m_AnchoredPosition: {x: -70, y: 70}
+  m_SizeDelta: {x: 70, y: 98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &154326829
 MonoBehaviour:
@@ -773,7 +773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.19607843}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -798,6 +798,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154326827}
   m_CullTransparentMesh: 1
+--- !u!114 &154326831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154326827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25e9f71d45e3b744836b15b1196fb3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &176764346 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6237240031827561423, guid: c160fe09a54d689479f0eece6584c279, type: 3}
@@ -1704,8 +1716,9 @@ GameObject:
   - component: {fileID: 437750425}
   - component: {fileID: 437750427}
   - component: {fileID: 437750426}
+  - component: {fileID: 437750428}
   m_Layer: 5
-  m_Name: queue1
+  m_Name: queue3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1744,7 +1757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.19607843}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1769,6 +1782,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437750424}
   m_CullTransparentMesh: 1
+--- !u!114 &437750428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437750424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25e9f71d45e3b744836b15b1196fb3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &441926669
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2656,11 +2681,13 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 154326828}
+  - {fileID: 947962757}
   - {fileID: 437750425}
   - {fileID: 607510906}
   - {fileID: 2040159061}
-  - {fileID: 154326828}
-  - {fileID: 947962757}
+  - {fileID: 1659020408}
+  - {fileID: 1599705124}
   - {fileID: 1905605791}
   - {fileID: 1340428887}
   - {fileID: 87636733}
@@ -2683,14 +2710,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71f1a7d4e4d95a40a5f65ed9e55f8f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  q1Text: {fileID: 1024200667}
-  q2Text: {fileID: 1903179022}
-  q3Text: {fileID: 113703105}
-  leftText: {fileID: 1687954096}
-  rightText: {fileID: 2002218225}
-  successText: {fileID: 1905605792}
-  changeText: {fileID: 1340428888}
-  costText: {fileID: 87636734}
+  mQueueTexts:
+  - {fileID: 1687954096}
+  - {fileID: 2002218225}
+  - {fileID: 1024200667}
+  - {fileID: 1903179022}
+  - {fileID: 113703105}
+  mUITexts:
+  - {fileID: 1905605792}
+  - {fileID: 1340428888}
+  - {fileID: 87636734}
+  mCanvasObjects:
+  - {fileID: 154326827}
+  - {fileID: 947962756}
+  - {fileID: 437750424}
+  - {fileID: 607510905}
+  - {fileID: 2040159060}
+  mCardBackImgFiles:
+  - {fileID: 21300000, guid: ad229c6f0862da34fa5d51726bcd5ab6, type: 3}
+  - {fileID: 21300000, guid: cfab4c4889eede54396dec8e13226b5b, type: 3}
+  - {fileID: 21300000, guid: 705cd88b4ce23d24897c1d6c6cb9fcbe, type: 3}
+  mCardImgFiles:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1001 &603064072
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2790,8 +2843,9 @@ GameObject:
   - component: {fileID: 607510906}
   - component: {fileID: 607510908}
   - component: {fileID: 607510907}
+  - component: {fileID: 607510909}
   m_Layer: 5
-  m_Name: queue2
+  m_Name: queue4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2830,7 +2884,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.19607843}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2855,6 +2909,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 607510905}
   m_CullTransparentMesh: 1
+--- !u!114 &607510909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607510905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25e9f71d45e3b744836b15b1196fb3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &640245984
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4195,8 +4261,9 @@ GameObject:
   - component: {fileID: 947962757}
   - component: {fileID: 947962759}
   - component: {fileID: 947962758}
+  - component: {fileID: 947962760}
   m_Layer: 5
-  m_Name: rightQueue
+  m_Name: queue2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4215,13 +4282,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2002218224}
-  - {fileID: 1599705124}
   m_Father: {fileID: 546091581}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 70, y: 50}
-  m_SizeDelta: {x: 70, y: 100}
+  m_AnchoredPosition: {x: 70, y: 70}
+  m_SizeDelta: {x: 70, y: 98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &947962758
 MonoBehaviour:
@@ -4236,7 +4302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.19607843}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4261,6 +4327,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 947962756}
   m_CullTransparentMesh: 1
+--- !u!114 &947962760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947962756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25e9f71d45e3b744836b15b1196fb3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -4444,7 +4522,7 @@ GameObject:
   - component: {fileID: 1024200668}
   - component: {fileID: 1024200667}
   m_Layer: 5
-  m_Name: Q1Text
+  m_Name: Q3Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4502,7 +4580,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Q1 Text
+  m_Text: Q3Text
 --- !u!222 &1024200668
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5161,8 +5239,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 30}
-  m_SizeDelta: {x: 80, y: 60}
+  m_AnchoredPosition: {x: 0, y: 20}
+  m_SizeDelta: {x: 80, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1340428888
 MonoBehaviour:
@@ -6030,11 +6108,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 436331553}
-  m_Father: {fileID: 947962757}
+  m_Father: {fileID: 546091581}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 10}
+  m_AnchoredPosition: {x: 70, y: 7.5}
   m_SizeDelta: {x: 70, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1599705125
@@ -6269,11 +6347,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 986390141}
-  m_Father: {fileID: 154326828}
+  m_Father: {fileID: 546091581}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 10}
+  m_AnchoredPosition: {x: -70, y: 10}
   m_SizeDelta: {x: 70, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1659020409
@@ -6558,7 +6636,7 @@ GameObject:
   - component: {fileID: 1687954097}
   - component: {fileID: 1687954096}
   m_Layer: 5
-  m_Name: LeftText
+  m_Name: Q1Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6580,7 +6658,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 34}
+  m_AnchoredPosition: {x: 0, y: 15}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1687954096
@@ -6616,7 +6694,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LeftText
+  m_Text: Q1Text
 --- !u!222 &1687954097
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7007,7 +7085,7 @@ GameObject:
   - component: {fileID: 1903179023}
   - component: {fileID: 1903179022}
   m_Layer: 5
-  m_Name: Q2Text
+  m_Name: Q4Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7065,7 +7143,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Q2 Text
+  m_Text: Q4Text
 --- !u!222 &1903179023
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7196,7 +7274,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 110}
+  m_AnchoredPosition: {x: 0, y: 133}
   m_SizeDelta: {x: 250, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1905605792
@@ -7517,7 +7595,7 @@ GameObject:
   - component: {fileID: 2002218226}
   - component: {fileID: 2002218225}
   m_Layer: 5
-  m_Name: RightText
+  m_Name: Q2Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7539,7 +7617,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 34}
+  m_AnchoredPosition: {x: 0, y: 15}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2002218225
@@ -7575,7 +7653,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RightText
+  m_Text: Q2Text
 --- !u!222 &2002218226
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7595,8 +7673,9 @@ GameObject:
   - component: {fileID: 2040159061}
   - component: {fileID: 2040159063}
   - component: {fileID: 2040159062}
+  - component: {fileID: 2040159064}
   m_Layer: 5
-  m_Name: queue3
+  m_Name: queue5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7635,7 +7714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.19607843}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7660,6 +7739,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2040159060}
   m_CullTransparentMesh: 1
+--- !u!114 &2040159064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040159060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25e9f71d45e3b744836b15b1196fb3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2061271981
 GameObject:
   m_ObjectHideFlags: 0

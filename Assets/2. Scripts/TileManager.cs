@@ -40,8 +40,8 @@ public class TileManager : MonoBehaviour
         {
             switch (mTiles[i])
             {
-                case eTile.None:
-                    gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.None];
+                case eTile.none:
+                    gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.none];
                     break;
                 case eTile.norm:
                     gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.norm];
@@ -73,7 +73,7 @@ public class TileManager : MonoBehaviour
     {
         switch (mTiles[index])
         {
-            case eTile.None:
+            case eTile.none:
                 break;
             case eTile.norm:
                 gTiles[index].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.brok];
