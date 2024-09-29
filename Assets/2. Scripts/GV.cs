@@ -22,80 +22,80 @@ public class GV
         }
     }
 
-    public enum eRank
+    public enum ECardRank
     {
         first = 1, second, third
     }
-
-    public enum eCard
+    public enum ECardType
     {
-        storm,
-        thunder,
-        lightning 
+        hellfire, //업화
+        explosion, //storm,//
+        //thunder,//
+        //lightning //
         // 마저 작성하기
     }
-    public enum eTile // 빈 타일도 있어야 함
+    public enum ETileType // 빈 타일도 있어야 함
     {
         none, norm, spec, dist, brok
     }
-    public enum eText { 
+    public enum EText {
         success, change, cost
     }
-    public enum eBackground
+    public enum ECardBackImg
     {
         first, second, third
     }
 
-    public List<List<List<eTile>>> dpTile = new List<List<List<eTile>>>
+    public List<List<List<ETileType>>> _dpTile = new List<List<List<ETileType>>>
     {
-        new List<List<eTile>> // 0
+        new List<List<ETileType>> // 0
         {
-            new List<eTile> // 0-0
+            new List<ETileType> // 0-0
             {
-               eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,
-               eTile.none,eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,eTile.none,
-               eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,
+               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+               ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
             },
-            new List<eTile> // 0-1
+            new List<ETileType> // 0-1
             { 
-               eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,
-               eTile.none,eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,eTile.none,
-               eTile.none,eTile.norm,eTile.dist,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.dist,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.dist,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.dist,eTile.norm,eTile.none,
-               eTile.none,eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,eTile.none,
-               eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,
+               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+               ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
             }
         },
-        new List<List<eTile>> // 1
+        new List<List<ETileType>> // 1
         { 
-            new List<eTile> // 1-0
+            new List<ETileType> // 1-0
             { 
-               eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,
+               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
             },
-            new List<eTile> // 1-1
+            new List<ETileType> // 1-1
             {
-               eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.dist,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.dist,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.dist,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.dist,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.norm,eTile.none,
-               eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,eTile.none,
+               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
             }
         }
     };

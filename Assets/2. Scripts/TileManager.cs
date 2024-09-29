@@ -14,90 +14,90 @@ using UnityEngine.Experimental.AI;
 public class TileManager : MonoBehaviour
 {
     [SerializeReference]
-    GameObject[] gTiles;
+    GameObject[] _goTiles;
 
     [SerializeReference]
-    Material[] mMaterials;
+    Material[] _materials;
 
-    private List<eTile> mTiles;
-    private List<int> mBrokens;
-    private System.Random mRand;
-    private int mMaxTiles;
+    private List<ETileType> _tiles;
+    private List<int> _brokenTiles;
+    private System.Random _rand;
+    private int maxTileNum;
 
     private void Awake()
     {
         TileManagerInit(0,1,0); // 선택한 부위+단계로 수정
     }
 
-    private void TileManagerInit(int pSlot, int pStage, int pBlessing)
+    private void TileManagerInit(int slot, int stage, int blessing)
     {
-        mRand = new System.Random();
-        mBrokens = new List<int>();
-        mTiles = GV.Instance.dpTile[pSlot][pStage];
-        mMaxTiles = mTiles.FindAll(tile => tile == eTile.norm).Count;
+        _rand = new System.Random();
+        _brokenTiles = new List<int>();
+        _tiles = GV.Instance._dpTile[slot][stage];
+        maxTileNum = _tiles.FindAll(tile => tile == ETileType.norm).Count;
 
         for (int i = 0; i < 64; ++i)
         {
-            switch (mTiles[i])
+            switch (_tiles[i])
             {
-                case eTile.none:
-                    gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.none];
+                case ETileType.none:
+                    _goTiles[i].gameObject.GetComponent<Renderer>().material = _materials[(int)ETileType.none];
                     break;
-                case eTile.norm:
-                    gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.norm];
+                case ETileType.norm:
+                    _goTiles[i].gameObject.GetComponent<Renderer>().material = _materials[(int)ETileType.norm];
                     break;
-                case eTile.spec:
+                case ETileType.spec:
                     Debug.Log("Tile data not verified");
                     break;
-                case eTile.dist:
-                    gTiles[i].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.dist];
+                case ETileType.dist:
+                    _goTiles[i].gameObject.GetComponent<Renderer>().material = _materials[(int)ETileType.dist];
                     break;
-                case eTile.brok:
+                case ETileType.brok:
                     Debug.Log("Tile data not verified");
                     break;
                 default:
                     Debug.LogError("Failed to generate tile: " + i);
                     break;
             }
-            gTiles[i].gameObject.GetComponent<Tile>().mIndex = i;
+            _goTiles[i].gameObject.GetComponent<Tile>()._index = i;
         }
     }
 
-    private void ChangeTile(int pIndex, eTile pTile) 
+    private void ChangETileType(int index, ETileType tile) 
     {
-        gTiles[pIndex].gameObject.GetComponent<Renderer>().material = mMaterials[(int)pTile];
-        mTiles[pIndex] = pTile;
+        _goTiles[index].gameObject.GetComponent<Renderer>().material = _materials[(int)tile];
+        _tiles[index] = tile;
     }
 
     public void BreakTile(int index)
     {
-        switch (mTiles[index])
+        switch (_tiles[index])
         {
-            case eTile.none:
+            case ETileType.none:
                 break;
-            case eTile.norm:
-                gTiles[index].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.brok];
-                mTiles[index] = eTile.brok;
-                mBrokens.Add(index);
+            case ETileType.norm:
+                _goTiles[index].gameObject.GetComponent<Renderer>().material = _materials[(int)ETileType.brok];
+                _tiles[index] = ETileType.brok;
+                _brokenTiles.Add(index);
                 Debug.Log("Normal tile break");
                 break;
-            case eTile.spec:
-                gTiles[index].gameObject.GetComponent<Renderer>().material = mMaterials[(int)eTile.brok];
-                mTiles[index] = eTile.brok;
-                mBrokens.Add(index);
+            case ETileType.spec:
+                _goTiles[index].gameObject.GetComponent<Renderer>().material = _materials[(int)ETileType.brok];
+                _tiles[index] = ETileType.brok;
+                _brokenTiles.Add(index);
                 Debug.Log("Special tile break");
                 // 특수 타일 효과 추가
                 break;
-            case eTile.dist:
+            case ETileType.dist:
                 Debug.Log("Distortion tile break");
                 for (int i = 0; i < 3; ++i)
                 {
-                    if (mBrokens.Count > 0)
+                    if (_brokenTiles.Count > 0)
                     {
-                        int randIndex = mRand.Next(mBrokens.Count);
-                        int randItem = mBrokens[randIndex];
-                        ChangeTile(randItem, eTile.norm);
-                        mBrokens.RemoveAt(randIndex);
+                        int randIndex = _rand.Next(_brokenTiles.Count);
+                        int randItem = _brokenTiles[randIndex];
+                        ChangETileType(randItem, ETileType.norm);
+                        _brokenTiles.RemoveAt(randIndex);
                     }
                 }
                 break;
@@ -111,7 +111,7 @@ public class TileManager : MonoBehaviour
 
     private bool CheckState()
     {
-        if(mBrokens.Count == mMaxTiles)
+        if(_brokenTiles.Count == maxTileNum)
         {
             // 게임 종료 시 GameManager에서 데이터 취합하도록 수정
             Debug.Log("Game Set");
@@ -123,19 +123,19 @@ public class TileManager : MonoBehaviour
     private void CreateSpec()
     { 
         if (CheckState()) return;
-        int tmp = mTiles.FindIndex(tile => tile == eTile.spec);
-        if (tmp != -1) ChangeTile(mTiles.FindIndex(tile => tile == eTile.spec), eTile.norm);
-        ChangeTile(RandomIndex(ref mTiles), eTile.spec);
+        int tmp = _tiles.FindIndex(tile => tile == ETileType.spec);
+        if (tmp != -1) ChangETileType(_tiles.FindIndex(tile => tile == ETileType.spec), ETileType.norm);
+        ChangETileType(RandomIndex(ref _tiles), ETileType.spec);
     }
 
-    private int RandomIndex(ref List<eTile> arr)
+    private int RandomIndex(ref List<ETileType> arr)
     {
         List<int> tmp = new List<int>();
         for (int i = 0; i < arr.Count; ++i)
         {
-            if (arr[i] == eTile.norm) tmp.Add(i);
+            if (arr[i] == ETileType.norm) tmp.Add(i);
         }
-        int randIndex = mRand.Next(tmp.Count);
+        int randIndex = _rand.Next(tmp.Count);
         return tmp[randIndex];
     }
     

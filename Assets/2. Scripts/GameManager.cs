@@ -6,9 +6,9 @@ using static GV;
 
 public class GameManager : MonoBehaviour
 {
-    private int mStage;
-    private int mSlot;
-    private int mBlessing;
+    private int _stage;
+    private int _slot;
+    private int _blessing;
 
     private void Awake()
     {
@@ -22,12 +22,12 @@ public class GameManager : MonoBehaviour
 
     private void SelectStage(int pStage)
     {
-        mStage = pStage;
+        _stage = pStage;
     }
 
     private void SelectSlot(int pSlot)
     {
-        mSlot = pSlot;
+        _slot = pSlot;
     }
 
 }

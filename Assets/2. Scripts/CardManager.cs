@@ -13,47 +13,49 @@ using static GV;
 public class CardManager : MonoBehaviour
 {
     [SerializeField]
-    Text[] mQueueTexts;
+    Text[] _queueTexts;
 
     [SerializeField]
-    Text[] mUITexts;
+    Text[] _uITexts;
 
     [SerializeField]
-    GameObject[] mCanvasObjects;
+    GameObject[] _canvasObjects;
 
     [SerializeField]
-    Sprite[] mCardBackImgFiles;
+    Sprite[] _cardBackImgFiles;
 
     [SerializeField]
-    Sprite[] mCardImgFiles;
+    Sprite[] _cardImgFiles;
 
+    private int _swapChances;
+    private int _gameChances;
+    private int _totalCost;
+    private List<Card> _cards;
+    private List<Image> _queueImages;
+    private System.Random _rand;
 
-    private int mSwaps;
-    private int mChances;
-    private int mCost;
-    private List<Card> mCards;
-    private List<Image> mQueueImages;
-    private System.Random mRand;
+    public bool _isSelect;
+    public Card _selectedCard;
 
     private void Awake()
     {
-        
+        _isSelect = false;
         CardManagerInit(0, 0); // 스테이지 입력 받도록 수정
         UIUpdate();
     }
-    private void CardManagerInit(int pStage, int pBlessing)
+    private void CardManagerInit(int stage, int blessing)
     {
-        mSwaps = 200 + pBlessing; // 테스트 후 수정
-        mChances = pStage + 7;// 횟수 조정
-        mCost = 0; // ui manager로 이전
-        mCards = new List<Card>();
-        mQueueImages = new List<Image>();
-        mRand = new System.Random();
+        _swapChances = 200 + blessing; // 테스트 후 수정
+        _gameChances = stage + 7;// 횟수 조정
+        _totalCost = 0; // ui manager로 이전
+        _cards = new List<Card>();
+        _queueImages = new List<Image>();
+        _rand = new System.Random();
         for (int i = 0; i < 5; ++i)
         {
-            CreateCard();
-            Image tmp = mCanvasObjects[i].GetComponent<Image>(); //
-            mQueueImages.Add(tmp);
+            CreatECardType();
+            Image tmp = _canvasObjects[i].GetComponent<Image>(); //
+            _queueImages.Add(tmp);
         }
     }
 
@@ -63,60 +65,60 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < 5; ++i)
         {
-            switch (mCards[i].rank) 
+            switch (_cards[i]._rank) 
             { 
-                case eRank.first:
-                    mQueueImages[i].sprite = mCardBackImgFiles[(int)eBackground.first];
+                case ECardRank.first:
+                    _queueImages[i].sprite = _cardBackImgFiles[(int)ECardBackImg.first];
                     break;
-                case eRank.second:
-                    mQueueImages[i].sprite = mCardBackImgFiles[(int)eBackground.second];
+                case ECardRank.second:
+                    _queueImages[i].sprite = _cardBackImgFiles[(int)ECardBackImg.second];
                     break;
-                case eRank.third:
-                    mQueueImages[i].sprite = mCardBackImgFiles[(int)eBackground.third];
+                case ECardRank.third:
+                    _queueImages[i].sprite = _cardBackImgFiles[(int)ECardBackImg.third];
                     break;
                 default:
                     break;
             }
+            
+            _queueTexts[i].text = _cards[i]._name;
 
-            mQueueTexts[i].text = mCards[i].name;
-
-/*            switch (mCards[i].type) // 이미지
+/*            switch (cards[i].type) // 이미지 추가
             {
-                case eCard.storm:
+                case ECardType.storm:
                     break;
-                case eCard.:
+                case ECardType.:
                     break;
             }*/
         }
 
-        mUITexts[(int)eText.success].text = mChances.ToString() + "회 이내에 초월 성공 시 " + "n단계 " + "달성";
-        mUITexts[(int)eText.change].text = "정령 교체 \r\n" + mSwaps.ToString() + "회 가능";
-        mUITexts[(int)eText.cost].text = "사용 금액: " + mCost;
+        _uITexts[(int)EText.success].text = _gameChances.ToString() + "회 이내에 초월 성공 시 " + "n단계 " + "달성";
+        _uITexts[(int)EText.change].text = "정령 교체 \r\n" + _swapChances.ToString() + "회 가능";
+        _uITexts[(int)EText.cost].text = "사용 금액: " + _totalCost;
     }
 
-    private void CreateCard()
+    private void CreatECardType()
     {
-        Array tmpArr = Enum.GetValues(typeof(eCard));
-        eCard randCard = (eCard)tmpArr.GetValue(new System.Random().Next(tmpArr.Length));
-        Card tmpCard = new Card(eRank.first, randCard);
-        mCards.Add(tmpCard);
+        Array tmpArr = Enum.GetValues(typeof(ECardType));
+        ECardType randCard = (ECardType)tmpArr.GetValue(new System.Random().Next(tmpArr.Length));
+        Card tmpCard = new Card(ECardRank.first, randCard);
+        _cards.Add(tmpCard);
     }
 
-    private void UseCard(int card)
+    private void UsECardType(int card)
     {
-        mCards.RemoveAt(card);
-        mChances -= 1;
-        CreateCard();
+        _cards.RemoveAt(card);
+        _gameChances -= 1;
+        CreatECardType();
         UIUpdate();
     }
 
-    private void ChangeCard(int n)
+    private void ChangECardType(int pos)
     {
-        if (mSwaps > 0)
+        if (_swapChances > 0)
         {
-            mCards.RemoveAt(n);
-            mSwaps -= 1;
-            CreateCard();
+            _cards.RemoveAt(pos);
+            _swapChances -= 1;
+            CreatECardType();
             UIUpdate();
         }
         else
@@ -127,16 +129,20 @@ public class CardManager : MonoBehaviour
     
     private void UpgradCard()
     {
-        if (mCards[0].type == mCards[1].type)
+        if (_cards[0]._type == _cards[1]._type)
         {
-            if (mCards[0].rank != eRank.third && mCards[0].rank != eRank.third)
+            if (_cards[0]._rank != ECardRank.third && _cards[0]._rank != ECardRank.third)
             {
-                int tmp = (int)mCards[0].rank + (int)mCards[1].rank;
-                mCards[0].rank = (eRank)tmp;
-                mCards.RemoveAt(1);
-                CreateCard();
+                int tmp = (int)_cards[0]._rank + (int)_cards[1]._rank;
+                _cards[0]._rank = (ECardRank)tmp;
+                _cards.RemoveAt(1);
+                CreatECardType();
                 UpgradCard();
             }
         }
+    }
+    void getCardRange(ECardType card)
+    {
+        
     }
 }

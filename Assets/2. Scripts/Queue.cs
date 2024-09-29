@@ -7,20 +7,23 @@ using UnityEngine.UI;
 
 public class Queue : MonoBehaviour, IPointerClickHandler
 {
-    private Card mCard;
-    private Text mText;
-    private CardManager mCardManager;
+    private Card _card;
+    private Text _text;
+    private CardManager _cardManager;
 
     private void Awake()
     {
-        mCardManager = GameObject.Find("Canvas").GetComponent<CardManager>();
-        mText = GetComponentInChildren<Text>();
-        if (mText == null) Debug.Log("Card is null");
+        _cardManager = GameObject.Find("Canvas").GetComponent<CardManager>();
+        _text = GetComponentInChildren<Text>();
+        if (_text == null) Debug.Log("Card is null");
     }
 
     public void OnPointerClick(PointerEventData e)
     {
         Debug.Log("UI Click");
+        _cardManager._isSelect = true;
+        _cardManager._selectedCard = _card; // 카드 정보 받아오도록
+        _cardManager._isSelect = _cardManager._isSelect ? false : true;
         // 카드의 모양대로 격자 생성
     }
 

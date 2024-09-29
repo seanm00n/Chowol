@@ -8,14 +8,13 @@ using static GV;
 
 public class Card
 {
-    public string name;
-    public eRank rank;
-    public eCard type;
-    public Card(eRank pRank, eCard pCard)
+    public string _name;
+    public ECardRank _rank;
+    public ECardType _type;
+    public Card(ECardRank rank, ECardType card)
     {
-        name = pCard.ToString();
-        rank = pRank;
-        type = pCard;
+        _name = card.ToString();
+        _rank = rank;
+        _type = card;
     }
 }
-
