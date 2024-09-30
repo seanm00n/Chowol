@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 3379764012689592470}
   - component: {fileID: 6508194559577285595}
   - component: {fileID: 4675652165216595957}
+  - component: {fileID: 1285286759047154059}
   m_Layer: 0
-  m_Name: NormalTile
+  m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,3 +106,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1285286759047154059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6237240031827561423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2582af1fd70e34a42b95b33e8e0875f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _materials:
+  - {fileID: 2100000, guid: 05b5704881873d14482de1d2876e9e33, type: 2}
+  - {fileID: 2100000, guid: 5c2af1a9df3908245a833ec88d54e893, type: 2}
+  - {fileID: 2100000, guid: 2f309bc7052ed7c409d216600af40165, type: 2}
+  - {fileID: 2100000, guid: 36f39561e1d9fc34ab0faddab27581fa, type: 2}
+  - {fileID: 2100000, guid: f5dc23b5a8a99684c9b4963f89df9193, type: 2}

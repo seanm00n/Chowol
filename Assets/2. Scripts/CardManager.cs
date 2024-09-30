@@ -10,8 +10,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static GV;
 
-public class CardManager : MonoBehaviour
-{
+public class CardManager : MonoBehaviour {
     [SerializeField]
     Text[] _queueTexts;
 
@@ -37,36 +36,30 @@ public class CardManager : MonoBehaviour
     public bool _isSelect;
     public Card _selectedCard;
 
-    private void Awake()
-    {
+    private void Start() {
         _isSelect = false;
         CardManagerInit(0, 0); // 스테이지 입력 받도록 수정
         UIUpdate();
     }
-    private void CardManagerInit(int stage, int blessing)
-    {
+    private void CardManagerInit(int stage, int blessing) {
         _swapChances = 200 + blessing; // 테스트 후 수정
         _gameChances = stage + 7;// 횟수 조정
         _totalCost = 0; // ui manager로 이전
         _cards = new List<Card>();
         _queueImages = new List<Image>();
         _rand = new System.Random();
-        for (int i = 0; i < 5; ++i)
-        {
-            CreatECardType();
+        for(int i = 0; i < 5; ++i) {
+            CreateCard();
             Image tmp = _canvasObjects[i].GetComponent<Image>(); //
             _queueImages.Add(tmp);
         }
     }
 
-    private void UIUpdate()
-    {
+    private void UIUpdate() {
         UpgradCard();
 
-        for (int i = 0; i < 5; ++i)
-        {
-            switch (_cards[i]._rank) 
-            { 
+        for(int i = 0; i < 5; ++i) {
+            switch(_cards[i]._rank) {
                 case ECardRank.first:
                     _queueImages[i].sprite = _cardBackImgFiles[(int)ECardBackImg.first];
                     break;
@@ -78,17 +71,17 @@ public class CardManager : MonoBehaviour
                     break;
                 default:
                     break;
-            }
-            
+            } // 객체지향 코딩하기
+
             _queueTexts[i].text = _cards[i]._name;
 
-/*            switch (cards[i].type) // 이미지 추가
-            {
-                case ECardType.storm:
-                    break;
-                case ECardType.:
-                    break;
-            }*/
+            /*            switch (cards[i].type) // 이미지 추가
+                        {
+                            case ECardType.storm:
+                                break;
+                            case ECardType.:
+                                break;
+                        }*/
         }
 
         _uITexts[(int)EText.success].text = _gameChances.ToString() + "회 이내에 초월 성공 시 " + "n단계 " + "달성";
@@ -96,53 +89,51 @@ public class CardManager : MonoBehaviour
         _uITexts[(int)EText.cost].text = "사용 금액: " + _totalCost;
     }
 
-    private void CreatECardType()
-    {
+    private void CreateCard() {
         Array tmpArr = Enum.GetValues(typeof(ECardType));
         ECardType randCard = (ECardType)tmpArr.GetValue(new System.Random().Next(tmpArr.Length));
         Card tmpCard = new Card(ECardRank.first, randCard);
         _cards.Add(tmpCard);
     }
 
-    private void UsECardType(int card)
-    {
+    private void UseCard(int card) {
         _cards.RemoveAt(card);
         _gameChances -= 1;
-        CreatECardType();
+        CreateCard();
         UIUpdate();
     }
 
-    private void ChangECardType(int pos)
-    {
-        if (_swapChances > 0)
-        {
+    private void ChangECardType(int pos) {
+        if(_swapChances > 0) {
             _cards.RemoveAt(pos);
             _swapChances -= 1;
-            CreatECardType();
+            CreateCard();
             UIUpdate();
-        }
-        else
-        {
+        } else {
             Debug.Log("No chances");
         }
     }
-    
-    private void UpgradCard()
-    {
-        if (_cards[0]._type == _cards[1]._type)
-        {
-            if (_cards[0]._rank != ECardRank.third && _cards[0]._rank != ECardRank.third)
-            {
+
+    private void UpgradCard() {
+        if(_cards[0]._type == _cards[1]._type) {
+            if(_cards[0]._rank != ECardRank.third && _cards[0]._rank != ECardRank.third) {
                 int tmp = (int)_cards[0]._rank + (int)_cards[1]._rank;
                 _cards[0]._rank = (ECardRank)tmp;
                 _cards.RemoveAt(1);
-                CreatECardType();
+                CreateCard();
                 UpgradCard();
             }
         }
     }
-    void getCardRange(ECardType card)
-    {
-        
+    public void SelectCard(Card card) {
+        _selectedCard = card;
+        _isSelect = !_isSelect;
+    }
+    public bool IsCardSelected() {
+        return _isSelect;
+    }
+    public void DeselectCard() {
+        _selectedCard = null;
+        _isSelect = false;
     }
 }

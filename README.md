@@ -20,13 +20,11 @@
 - UI기능 CardManager에서 이전 후 수정
 - 리팩터링
 - dpTile DB로 옮기고 읽고쓰도록 수정
+- Tile에 type이 정상 적용되지 않는 현상 수정
+- TileManager::_tile 초기화 안될 시 수정
 
 <추가>
-- 카드 이름 추가
 - 카드 별 타격 범위 데이터 추가
-- 카드 한글 번역 함수 추가
 - 특수 타일 효과 추가
-- 타일 데이터 추가
 
 <에러>
-- CardManager.cs(57) Index out of range
