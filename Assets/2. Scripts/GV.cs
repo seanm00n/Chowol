@@ -1,10 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.UIElements;
 
 
 public class GV {
@@ -23,7 +17,7 @@ public class GV {
     private static Dictionary<string, string> _dictionary;
 
     public enum ECardRank {
-        first = 1, second, third
+        first, second, third
     }
     public enum ECardType {
         hellfire, explosion, lightning, thunderbolt, whirlwind, shockwave, 
@@ -32,12 +26,6 @@ public class GV {
     public enum ETileType // 빈 타일도 있어야 함
     {
         none, norm, spec, dist, brok
-    }
-    public enum EText {
-        success, change, cost
-    }
-    public enum ECardBackImg {
-        first, second, third
     }
     private static void DictionaryInit() {
         _dictionary = new Dictionary<string, string> {

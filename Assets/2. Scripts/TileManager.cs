@@ -1,21 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using System.IO;
-using System;
 using static GV;
-using UnityEngine.UIElements;
-using Unity.VisualScripting;
-using System.Reflection;
-using UnityEngine.Experimental.AI;
-using TMPro;
 
 public class TileManager : MonoBehaviour {
-/*    [SerializeReference]
-    GameObject[] _tiles;*/
-//.gameObject.GetComponent<Tile>()
+
     [SerializeReference]
     Tile[] _tiles;
 
@@ -36,7 +24,7 @@ public class TileManager : MonoBehaviour {
         for(int i = 0; i < 64; ++i) {
             _tiles[i].TileInit(i, tmp[i]);
             if(tmp[i] == ETileType.norm) {
-                _availTiles.Add(i); //
+                _availTiles.Add(i);
             }
         }
     }

@@ -1,33 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using static GV;
 
 public class Tile : MonoBehaviour {
-    private TileManager _tileManager;
-    private CardManager _cardManager;
 
     [SerializeField]
     Material[] _materials;
-    Material _material;
+
+    private TileManager _tileManager;
+    private CardManager _cardManager;
+    private Renderer _renderer;
     private int _index;
     private ETileType _type;
 
     public void TileInit(int index, ETileType type) {
         _tileManager = GameObject.Find("TileManager").GetComponent<TileManager>();
         _cardManager = GameObject.Find("Canvas").GetComponent<CardManager>();
-        _material = gameObject.GetComponent<Renderer>().material;
+        _renderer = gameObject.GetComponent<Renderer>();
         _index = index;
         _type = type;
-        _material = _materials[(int)type];
+        _renderer.material = _materials[(int)type];
     }
 
     public void SetTileType(ETileType type) {
         _type = type;
-        _material = _materials[(int)type];
+        _renderer.material = _materials[(int)type];
     }
 
     public void BreakTile() {
