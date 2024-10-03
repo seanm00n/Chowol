@@ -16,8 +16,8 @@ public class GV {
 
     private static Dictionary<string, string> _dictionary;
 
-    public enum ECardRank {
-        first, second, third
+    public enum ECardRank { // CardUpgrade에서 필요함
+        first=1, second, third
     }
     public enum ECardType {
         hellfire, explosion, lightning, thunderbolt, whirlwind, shockwave, 

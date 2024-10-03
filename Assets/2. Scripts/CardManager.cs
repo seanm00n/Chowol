@@ -16,7 +16,7 @@ public class CardManager : MonoBehaviour {
 
     public  void CardManagerInit(int stage, int blessing) {
         _uimanager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        _swapChances = 2 + blessing; 
+        _swapChances = 200 + blessing; 
         _gameChances = stage + 7; // 횟수 조정
         _totalCost = 0; 
         _cards = new List<Card>();
@@ -24,6 +24,8 @@ public class CardManager : MonoBehaviour {
         for(int i = 0; i < 5; ++i) {
             CreateCard();
         }
+        UpgradCard(0);
+        SendCardData();
     }
 
     private void CreateCard() { // 카드 배열에 카드 무작위로 하나 추가
@@ -36,32 +38,36 @@ public class CardManager : MonoBehaviour {
     public void UseCard(int index) { // 사용한 카드를 배열에서 지운 뒤 카드 하나 생성해 배열에 추가
         _cards.RemoveAt(index);
         _gameChances -= 1;
+        _totalCost += 140;
         CreateCard();
+        UpgradCard(index);
         SendCardData();
     }
 
     public void ChangeCard(int index) { // 카드 스왑
         if(_swapChances > 0) {
             _swapChances -= 1;
-            _cards.RemoveAt(index);
+            _cards[index] = _cards[2];
+            _cards.RemoveAt(2);
             CreateCard();
+            UpgradCard(index);
             SendCardData();
         } else {
             Debug.Log("No chances");
         }
     }
 
-    private void UpgradCard() { // 같은 종류의 카드이면 하나만 남겨 업그레이드 후 새 카드 배열에 추가
+    private void UpgradCard(int index) { // 같은 종류의 카드이면 하나만 남겨 업그레이드 후 새 카드 배열에 추가
         if(_cards[0]._type == _cards[1]._type) {
             if(_cards[0]._rank != ECardRank.third && _cards[0]._rank != ECardRank.third) {
                 int tmp = (int)_cards[0]._rank + (int)_cards[1]._rank;
-                _cards[0]._rank = (ECardRank)tmp;
-                _cards.RemoveAt(1);
+                _cards[index]._rank = (ECardRank)tmp;
+                int num = (index != 0) ? 0 : 1;
+                _cards.RemoveAt(num);
                 CreateCard();
-                UpgradCard();
+                UpgradCard(index);
             }
         }
-        SendCardData();
     }
 
     public void SelectCard(int index) {
