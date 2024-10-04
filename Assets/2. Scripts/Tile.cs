@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static GV;
 
@@ -14,7 +16,7 @@ public class Tile : MonoBehaviour {
 
     public void TileInit(int index, ETileType type) {
         _tileManager = GameObject.Find("TileManager").GetComponent<TileManager>();
-        _cardManager = GameObject.Find("Canvas").GetComponent<CardManager>();
+        _cardManager = GameObject.Find("CardManager").GetComponent<CardManager>();
         _renderer = gameObject.GetComponent<Renderer>();
         _index = index;
         _type = type;
@@ -26,22 +28,42 @@ public class Tile : MonoBehaviour {
         _renderer.material = _materials[(int)type];
     }
 
-    public void BreakTile() {
+    public void BreakTile() {// 타입 변경, 색상 변경, 옵션 발동 등 추가
+        ECardType selectedCardType = _cardManager.GetSelectedCard()._type;
+        Debug.Log("Breaktile");
         switch(_type) {
             case ETileType.none:
+                break;
+            case ETileType.norm:
                 _tileManager.AddBrokens(_index);
-                // 타입 변경, 색상 변경, 옵션 발동 등 추가
+                _type = ETileType.brok;
+                _renderer.material = _materials[(int)_type];
+                break;
+            case ETileType.spec:
+                _tileManager.AddBrokens(_index);
+                _type = ETileType.brok;
+                _renderer.material = _materials[(int)_type]; //특수 타일 효과 추가
                 break;
             case ETileType.dist:
-                _tileManager.DistortionBreak();
+                if(new[] { ECardType.purification, ECardType.resonance }.Contains(selectedCardType)) {
+                    _tileManager.AddBrokens(_index);
+                    _type = ETileType.brok;
+                    _renderer.material = _materials[(int)_type];
+                    break; 
+                } else {
+                    _tileManager.DistortionBreak();
+                }
+                break;
+            case ETileType.brok:
                 break;
         }
     }
 
     private void OnMouseDown() {
-        if(_cardManager.IsCardSelected()) {
-            BreakTile();
-            _cardManager.DeselectCard();
-        }
+        if(_cardManager.IsCardSelected() && (_type == ETileType.norm || _type == ETileType.spec)) //정화 추가
+            _tileManager.BreakTiles(_index);
+    }
+    public ETileType GetTileType() {
+        return _type;
     }
 }

@@ -15,6 +15,7 @@ public class GV {
     }
 
     private static Dictionary<string, string> _dictionary;
+    private static Dictionary<ECardType, List<float>> _breakProbabilities;
 
     public enum ECardRank { // CardUpgrade에서 필요함
         first=1, second, third
@@ -42,6 +43,23 @@ public class GV {
             { "eruption", "분출" },
             { "resonance", "공명" }
         };
+        _breakProbabilities = new Dictionary<ECardType, List<float>> {
+            { ECardType.hellfire, new List<float> { 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f} },
+            { ECardType.explosion, new List<float> { 0.85f, 0.85f, 0.85f, 0.85f, 0.7f, 0.7f, 0.7f, 0.7f, 0.55f, 0.55f, 0.55f, 0.55f, 0.4f, 0.4f, 0.4f, 0.4f, 0.25f, 0.25f, 0.25f, 0.25f, 0.1f, 0.1f, 0.1f, 0.1f } },
+            { ECardType.lightning, new List<float> { 1f, 1f, 1f, 1f, 1f, 1f, 1f } },
+            { ECardType.thunderbolt, new List<float> { 0.5f, 0.5f, 0.5f, 0.5f } },
+            { ECardType.whirlwind, new List<float> { 0.5f, 0.5f, 0.5f, 0.5f } },
+            { ECardType.shockwave, new List<float> { 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f} },
+            { ECardType.earthquake, new List<float> { 0.85f, 0.85f, 0.7f, 0.7f, 0.55f, 0.55f, 0.4f, 0.4f, 0.25f, 0.25f, 0.1f, 0.1f } },
+            { ECardType.sunami, new List<float> { 0.85f, 0.85f, 0.85f, 0.85f, 0.7f, 0.7f, 0.7f, 0.7f, 0.55f, 0.55f, 0.55f, 0.55f, 0.4f, 0.4f, 0.4f, 0.4f, 0.25f, 0.25f, 0.25f, 0.25f, 0.1f, 0.1f, 0.1f, 0.1f } },
+            { ECardType.storm, new List<float> { 0.85f, 0.85f, 0.7f, 0.7f, 0.55f, 0.55f, 0.4f, 0.4f, 0.25f, 0.25f, 0.1f, 0.1f } },
+            { ECardType.purification, new List<float> { 0.5f, 0.5f } },
+            { ECardType.eruption, new List<float> { } },
+            { ECardType.resonance, new List<float> { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f } }
+        };
+    }
+    public float[] GetBreakProbabilities(ECardType type) {
+        return _breakProbabilities[type].ToArray();
     }
     public string GetKorean(ECardType type) {
         if(_dictionary == null) DictionaryInit();
