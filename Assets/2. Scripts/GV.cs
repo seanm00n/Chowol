@@ -18,10 +18,10 @@ public class GV {
     private static Dictionary<ECardType, List<float>> _breakProbabilities;
 
     public enum ECardRank { // CardUpgrade에서 필요함
-        first=1, second, third
+        first = 1, second, third
     }
     public enum ECardType {
-        hellfire, explosion, lightning, thunderbolt, whirlwind, shockwave, 
+        hellfire, explosion, lightning, thunderbolt, whirlwind, shockwave,
         earthquake, sunami, storm, purification, eruption, resonance
     }
     public enum ETileType // 빈 타일도 있어야 함
@@ -66,7 +66,7 @@ public class GV {
 
         if(_dictionary.TryGetValue(type.ToString(), out string result)) {
             return result;
-        }else {
+        } else {
             return "null";
         }
     }
@@ -77,50 +77,560 @@ public class GV {
         {
             new List<ETileType> // 0-0
             {
-               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
-               ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
-               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
             },
             new List<ETileType> // 0-1
             {
-               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
-               ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
-               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
-            }
+                ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+            },
+            new List<ETileType> // 0-2
+            {
+                ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+            },
+            new List<ETileType> // 0-3
+            {
+                ETileType.none,ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,
+                ETileType.none,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,
+                ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+            },
+            new List<ETileType> // 0-4
+            {
+                ETileType.none,ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,
+                ETileType.none,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,
+                ETileType.none,ETileType.none,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+            },
+            new List<ETileType> // 0-5
+            {
+                ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,
+                ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,
+                ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,
+                ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+            },
+            new List<ETileType> // 0-6
+            {
+                ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.dist,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,
+                ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,
+                ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,
+                ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.dist,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,ETileType.none,
+            },
         },
         new List<List<ETileType>> // 1
         {
             new List<ETileType> // 1-0
             {
-               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
             },
             new List<ETileType> // 1-1
             {
-               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
-               ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.dist,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.norm,ETileType.none,
+                ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,ETileType.none,
+            },
+            new List<ETileType> // 1-2
+            {
+                ETileType.none,  ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 1-3
+            {
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 1-4
+            {
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 1-5
+            {
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm
+            },
+            new List<ETileType> // 1-6
+            {
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm
+            }
+        },
+        new List<List<ETileType>> // 2
+        {
+            new List<ETileType> // 2-0
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 2-1
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 2-2
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none                
+            },
+            new List<ETileType> // 2-3
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 2-4
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.none, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 2-5
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 2-6
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none
+            }
+        },
+        new List<List<ETileType>> // 3
+        {
+            new List<ETileType>() // 3-0
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType>() // 3-1
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType>() // 3-2
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType>() // 3-3
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType>() // 3-4
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.none, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType>() // 3-5
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType>() // 3-6
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none
+            }
+        },
+        new List<List<ETileType>> // 4
+        {
+            new List<ETileType> // 4-0
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 4-1
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 4-2
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 4-3
+            {
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 4-4
+            {
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 4-5
+            {
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm
+            },
+            new List<ETileType> // 4-6
+            {
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm
+            }
+        },
+        new List<List<ETileType>> // 5
+        {
+            new List<ETileType> // 5-0
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 5-1
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 5-2
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 5-3
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 5-4
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 5-5
+            {
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 5-6
+            {
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none
+            }
+        },
+        new List<List<ETileType>> // 6
+        {
+            new List<ETileType> // 6-0
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 6-1
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 6-2
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 6-3
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 6-4
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 6-5
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none
+            },
+            new List<ETileType> // 6-6
+            {
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
+                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none
             }
         }
     };

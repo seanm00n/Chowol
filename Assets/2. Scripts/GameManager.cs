@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
         _uiManager.UIManagerInit(); // 순서 주의
-        _tileManager.TileManagerInit(0, 1, 0); // (_slot, _stage, _blessing)
+        _tileManager.TileManagerInit(0, 6, 0); // (_slot, _stage, _blessing)
         _cardManager.CardManagerInit(0, 0); // (_stage, _blessing)
     }
 
