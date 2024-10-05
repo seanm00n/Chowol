@@ -12,18 +12,20 @@ public class TileManager : MonoBehaviour {
     private List<int> _brokenTiles;
     private List<int> _availTiles;
     private System.Random _rand;
-    //private int _availTilesNum;
+    private AudioSource _audioSource;
     private int? _speciaTileIndex;
     private CardManager _cardManager;
+    private UIManager _uiManager;
 
     public void TileManagerInit(int slot, int stage, int blessing) {
+        _audioSource = GetComponent<AudioSource>();
         _cardManager = GameObject.Find("CardManager").GetComponent<CardManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _rand = new System.Random();
         _brokenTiles = new List<int>();
         _availTiles = new List<int>();
         List<ETileType> tmp = new List<ETileType>();
         tmp = GV.Instance._dpTile[slot][stage];
-        //_availTilesNum = tmp.FindAll(tile => tile == ETileType.norm).Count;
 
         for(int i = 0; i < 64; ++i) {
             _tiles[i].TileInit(i, tmp[i]);
@@ -52,10 +54,11 @@ public class TileManager : MonoBehaviour {
         }
     }
 
-    private bool CheckState() {
+    private bool IsGameSet() {
         if(_availTiles.Count == 0) {
             // 게임 종료 시 GameManager에서 데이터 취합하도록 수정
             Debug.Log("Game Set");
+            _uiManager.ShowGameSetUI();
             return true;
         }
 
@@ -63,7 +66,7 @@ public class TileManager : MonoBehaviour {
     }
 
     private void CreateSpec() {
-        if(CheckState()) {
+        if(IsGameSet()) {
             return;
         }
 
@@ -104,6 +107,7 @@ public class TileManager : MonoBehaviour {
         _cardManager.UseCard();
         _cardManager.DeselectCard();
         CreateSpec();
+        _audioSource.Play();
     }
 
     public List<Tile> GetNeighborTiles(int target, Card selectedCard) {

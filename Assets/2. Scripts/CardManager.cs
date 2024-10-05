@@ -5,6 +5,9 @@ using static GV;
 
 public class CardManager : MonoBehaviour {
 
+    [SerializeField]
+    public AudioClip[] _audioClips;
+
     private int _swapChances;
     private int _gameChances;
     private int _totalCost;
@@ -13,8 +16,10 @@ public class CardManager : MonoBehaviour {
     private UIManager _uimanager;
     private bool _isSelect;
     private int _selectedCard;
+    private AudioSource _audioSource;
 
     public  void CardManagerInit(int stage, int blessing) {
+        _audioSource = GetComponent<AudioSource>();
         _uimanager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _swapChances = 200 + blessing; 
         _gameChances = stage + 7; // 횟수 조정
@@ -38,7 +43,6 @@ public class CardManager : MonoBehaviour {
             }
         }
         ECardType randCard = availableCards[_rand.Next(availableCards.Count)];
-        //ECardType randCard = (ECardType)tmpArr.GetValue(new System.Random().Next(tmpArr.Length));
         Card tmpCard = new Card(ECardRank.first, randCard);
         _cards.Add(tmpCard);
     }
@@ -65,6 +69,8 @@ public class CardManager : MonoBehaviour {
         } else {
             Debug.Log("No chances");
         }
+        _audioSource.clip = _audioClips[0];
+        _audioSource.Play();
     }
 
     private void UpgradCard() { // 같은 종류의 카드이면 하나만 남겨 업그레이드 후 새 카드 배열에 추가
@@ -82,6 +88,8 @@ public class CardManager : MonoBehaviour {
     public void SelectCard(int index) {
         _selectedCard = index;
         _isSelect = true;
+        _audioSource.clip = _audioClips[1];
+        _audioSource.Play();
     }
     public Card GetSelectedCard() {
         return _cards[_selectedCard];

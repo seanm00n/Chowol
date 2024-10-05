@@ -28,6 +28,7 @@ public class GV {
     {
         none, norm, spec, dist, brok
     }
+
     private static void DictionaryInit() {
         _dictionary = new Dictionary<string, string> {
             { "hellfire", "¾÷È­" },
