@@ -8,24 +8,21 @@
 # 출처
 <시스템>
 - 이 프로젝트는 MMORPG 게임 "로스트 아크"의 "초월 시스템"을 참고하여 개발되었습니다.
+
 <사운드>
 - smilegate RPG
 - https://gongu.copyright.or.kr/gongu/wrt/wrt/view.do?wrtSn=13252439&menuNo=200020
 
 # Tasks
 <구현>
-- 성공 횟수 텍스트 알고리즘 구현*
-- 카드 선택 시 하이라이트 구현*
-- 카드 345번은 선택 안되는 기능 구현*
 - 특수 타일 효과 구현
-- 엘조윈의 가호 효과 구현
 
 <수정>
-- 타일 테두리 보이게 수정*
-- availTiles에 추가 안되거나 안 지워지는 경우 찾아 수정*
+- availTiles에 추가 안되거나 안 지워지는 경우 찾아 수정
+- special 타일 안부서지는 현상 수정
+- 카드 별 부수는 타일 위치 수정
 - 정화 카드 dist에 사용할 수 있도록 수정*
-- TileManagerInit 부위, 단계 입력받도록 수정
-- 특정 카드 tmp배열 저장 순서 수정
 - 리팩터링
 
-
+<에러>
+- 특정 상황에서 카드 선택 후 블럭 클릭 시 GetSelectedCard에서 NullReferenceException에러 발생

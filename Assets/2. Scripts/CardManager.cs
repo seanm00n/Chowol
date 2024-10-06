@@ -17,13 +17,17 @@ public class CardManager : MonoBehaviour {
     private bool _isSelect;
     private int _selectedCard;
     private AudioSource _audioSource;
+    private int _gameGrade;
+    private List<List<int>> _gameChanceDictionary;
 
-    public  void CardManagerInit(int stage, int blessing) {
+    public  void CardManagerInit(int slot, int stage, int blessing) {
         _audioSource = GetComponent<AudioSource>();
         _uimanager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        _swapChances = 200 + blessing; 
-        _gameChances = stage + 7; // 횟수 조정
-        _totalCost = 0; 
+        _swapChances = 2 + blessing;
+        DictionaryInit();
+        _gameChances = _gameChanceDictionary[slot][stage];
+        _totalCost = 0;
+        _gameGrade = 3;
         _cards = new List<Card>();
         _rand = new System.Random();
         for(int i = 0; i < 5; ++i) {
@@ -45,15 +49,18 @@ public class CardManager : MonoBehaviour {
         ECardType randCard = availableCards[_rand.Next(availableCards.Count)];
         Card tmpCard = new Card(ECardRank.first, randCard);
         _cards.Add(tmpCard);
+        DeselectCard();
     }
 
     public void UseCard() { // 사용한 카드를 배열에서 지운 뒤 카드 하나 생성해 배열에 추가
-        _gameChances -= 1;
+        _gameChances -= 1; //게임이 종료됬으면 단계 계산을 멈춰야함
+        CalcGameGrade();
         _totalCost += 140;
         _cards[_selectedCard] = _cards[2];
         _cards.RemoveAt(2);
         CreateCard();
         UpgradCard();
+        //DeselectCard();
         SendCardData();
     }
 
@@ -99,7 +106,10 @@ public class CardManager : MonoBehaviour {
     }
     public void DeselectCard() {
         _selectedCard = -1;
+        _uimanager.SelectQueue(0);
+        _uimanager.SelectQueue(1);
         _isSelect = false;
+        
     }
     public void SendCardData() { // UIManager에 카드 배열 전달 후 업데이트
         _uimanager.UIUpdate(_cards);
@@ -113,4 +123,38 @@ public class CardManager : MonoBehaviour {
     public int GetTotalCost() {
         return _totalCost;
     }
+    public int GetGameGrade() {
+        return _gameGrade;
+    }
+    public void CalcGameGrade() {
+        if(_gameChances <= 0) {
+            if(_gameGrade > 0) {
+                _gameGrade--;
+                _gameChances += (_gameGrade == 1) ? 2 : 1; 
+            }
+        }
+    }
+    public void DictionaryInit() {
+        _gameChanceDictionary = new List<List<int>> {
+            new List<int> { // 투구
+                7, 7, 7, 8, 8, 11, 11
+            },
+            new List<int> { // 어께
+                7, 7, 7, 10, 10, 13, 13
+            },
+            new List<int> { // 상의
+                5, 5, 5, 5, 5, 8, 8
+            },
+            new List<int> { //하의
+                7, 7, 7, 10, 10, 13, 13
+            },
+            new List<int> { // 장갑
+                7, 7, 7, 8, 8, 11, 11
+            },
+            new List<int> { // 무기
+                5, 5, 5, 5, 5, 8, 8
+            }
+        };
+    }
 }
+

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine.UIElements;
 
 
 public class GV {
@@ -16,7 +17,6 @@ public class GV {
 
     private static Dictionary<string, string> _dictionary;
     private static Dictionary<ECardType, List<float>> _breakProbabilities;
-
     public enum ECardRank { // CardUpgrade에서 필요함
         first = 1, second, third
     }
@@ -71,7 +71,6 @@ public class GV {
             return "null";
         }
     }
-
     public List<List<List<ETileType>>> _dpTile = new List<List<List<ETileType>>>
     {
         new List<List<ETileType>> // 0

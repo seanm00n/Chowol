@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using static GV;
 
@@ -11,19 +12,21 @@ public class TileManager : MonoBehaviour {
 
     private List<int> _brokenTiles;
     private List<int> _availTiles;
+    private List<int> _distTiles;
     private System.Random _rand;
     private AudioSource _audioSource;
     private int? _speciaTileIndex;
     private CardManager _cardManager;
     private UIManager _uiManager;
 
-    public void TileManagerInit(int slot, int stage, int blessing) {
+    public void TileManagerInit(int slot, int stage, int blessing) { 
         _audioSource = GetComponent<AudioSource>();
         _cardManager = GameObject.Find("CardManager").GetComponent<CardManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _rand = new System.Random();
-        _brokenTiles = new List<int>();
         _availTiles = new List<int>();
+        _brokenTiles = new List<int>();
+        _distTiles = new List<int>();
         List<ETileType> tmp = new List<ETileType>();
         tmp = GV.Instance._dpTile[slot][stage];
 
@@ -31,6 +34,18 @@ public class TileManager : MonoBehaviour {
             _tiles[i].TileInit(i, tmp[i]);
             if(tmp[i] == ETileType.norm) {
                 _availTiles.Add(i);
+            }
+            if(tmp[i] == ETileType.dist) {
+                _distTiles.Add(i);
+            }
+        }
+        for(int j = 0; j < blessing; ++j) {
+            if(_distTiles.Count > 0) {
+                int randIndex = _rand.Next(_distTiles.Count);
+                int randTile = _distTiles[randIndex];
+                _tiles[randTile].SetTileType(ETileType.norm);
+                _distTiles.Remove(randTile);
+                _availTiles.Add(randTile);
             }
         }
     }
@@ -56,7 +71,6 @@ public class TileManager : MonoBehaviour {
 
     private bool IsGameSet() {
         if(_availTiles.Count == 0) {
-            // 게임 종료 시 GameManager에서 데이터 취합하도록 수정
             Debug.Log("Game Set");
             _uiManager.ShowGameSetUI();
             return true;
@@ -105,7 +119,6 @@ public class TileManager : MonoBehaviour {
         }
 
         _cardManager.UseCard();
-        _cardManager.DeselectCard();
         CreateSpec();
         _audioSource.Play();
     }

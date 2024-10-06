@@ -22,13 +22,13 @@ public class MenuControl : MonoBehaviour
     private string[] _slotType;
 
     private void Awake() {
+        _slotType = new string[] { "투 구", "견 갑", "상 의", "하 의", "장 갑", "무 기" };
         _slot = 1;
         _stage = 1;
-        _blessing = 1;
-        _SlotText.text = "투 구";
-        _stageText.text = "1단계";
-        _blessingText.text = "1단계";
-        _slotType = new string[] { "투 구", "어 께", "상 의", "하 의", "장 갑", "무 기" };
+        _blessing = 0;
+        _SlotText.text = _slotType[_slot - 1];
+        _stageText.text = _stage + "단계";
+        _blessingText.text = _blessing + "단계";
     }
 
     public void OnSlotLeftButtonClick() {
@@ -56,13 +56,13 @@ public class MenuControl : MonoBehaviour
         _stageText.text = _stage + "단계";
     }
     public void OnBlessingLeftButton() {
-        if(_blessing > 1) {
+        if(_blessing > 0) {
             _blessing--;
         }
         _blessingText.text = _blessing + "단계";
     }
     public void OnBlessingRightButton() {
-        if(_blessing < 7) {
+        if(_blessing < 10) {
             _blessing++;
         }
         _blessingText.text = _blessing + "단계";
@@ -80,6 +80,6 @@ public class MenuControl : MonoBehaviour
         return _stage - 1;
     }
     public static int GetBlessing() {
-        return _blessing - 1;
+        return _blessing;
     }
 }

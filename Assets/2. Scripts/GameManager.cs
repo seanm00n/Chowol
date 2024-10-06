@@ -16,9 +16,9 @@ public class GameManager : MonoBehaviour {
         _slot = MenuControl.GetSlot();
         _stage = MenuControl.GetStage();
         _blessing = MenuControl.GetBlessing();
-        _uiManager.UIManagerInit(); // 순서 주의
+        _uiManager.UIManagerInit(_slot, _stage, _blessing); // 순서 주의
         _tileManager.TileManagerInit(_slot, _stage, _blessing);
-        _cardManager.CardManagerInit(_stage, _blessing);
+        _cardManager.CardManagerInit(_slot, _stage, _blessing);
     }
     public void OnStageSelectButtonClick() {
         SceneManager.LoadScene("MenuScene");
