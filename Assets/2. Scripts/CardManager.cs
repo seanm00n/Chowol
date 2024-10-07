@@ -15,15 +15,17 @@ public class CardManager : MonoBehaviour {
     private System.Random _rand;
     private UIManager _uimanager;
     private bool _isSelect;
-    private int _selectedCard;
+    private int _selectedCardIndex;
     private AudioSource _audioSource;
     private int _gameGrade;
     private List<List<int>> _gameChanceDictionary;
+    private GameManager _gameManager;
 
     public  void CardManagerInit(int slot, int stage, int blessing) {
         _audioSource = GetComponent<AudioSource>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _uimanager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        _swapChances = 2 + blessing;
+        _swapChances = 200 + blessing; // 수정
         DictionaryInit();
         _gameChances = _gameChanceDictionary[slot][stage];
         _totalCost = 0;
@@ -53,10 +55,13 @@ public class CardManager : MonoBehaviour {
     }
 
     public void UseCard() { // 사용한 카드를 배열에서 지운 뒤 카드 하나 생성해 배열에 추가
-        _gameChances -= 1; //게임이 종료됬으면 단계 계산을 멈춰야함
-        CalcGameGrade();
+        _gameChances -= 1;
+        //게임이 종료됬으면 단계 계산을 멈춰야함
+        if(!_gameManager.GetIsGameSet()) {
+            CalcGameGrade();
+        }
         _totalCost += 140;
-        _cards[_selectedCard] = _cards[2];
+        _cards[_selectedCardIndex] = _cards[2];
         _cards.RemoveAt(2);
         CreateCard();
         UpgradCard();
@@ -67,7 +72,7 @@ public class CardManager : MonoBehaviour {
     public void ChangeCard(int index) { // 카드 스왑
         if(_swapChances > 0) {
             _swapChances -= 1;
-            DeselectCard();
+            //DeselectCard();
             _cards[index] = _cards[2];
             _cards.RemoveAt(2);
             CreateCard();
@@ -93,19 +98,19 @@ public class CardManager : MonoBehaviour {
     }
 
     public void SelectCard(int index) {
-        _selectedCard = index;
+        _selectedCardIndex = index;
         _isSelect = true;
         _audioSource.clip = _audioClips[1];
         _audioSource.Play();
     }
     public Card GetSelectedCard() {
-        return _cards[_selectedCard];
+        return _cards[_selectedCardIndex];
     }
     public bool IsCardSelected() {
         return _isSelect;
     }
     public void DeselectCard() {
-        _selectedCard = -1;
+        _selectedCardIndex = -1;
         _uimanager.SelectQueue(0);
         _uimanager.SelectQueue(1);
         _isSelect = false;

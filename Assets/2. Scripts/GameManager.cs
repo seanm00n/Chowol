@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
     private TileManager _tileManager;
     private CardManager _cardManager;
     private UIManager _uiManager;
+    private bool _isGameSet;
 
     private void Awake() {
         _tileManager = GameObject.Find("TileManager").GetComponent<TileManager>();
@@ -19,8 +20,15 @@ public class GameManager : MonoBehaviour {
         _uiManager.UIManagerInit(_slot, _stage, _blessing); // 순서 주의
         _tileManager.TileManagerInit(_slot, _stage, _blessing);
         _cardManager.CardManagerInit(_slot, _stage, _blessing);
+        _isGameSet = false;
     }
     public void OnStageSelectButtonClick() {
         SceneManager.LoadScene("MenuScene");
+    }
+    public void SetIsGameSet(bool value) {
+        _isGameSet = value;
+    }
+    public bool GetIsGameSet() {
+        return _isGameSet;
     }
 }

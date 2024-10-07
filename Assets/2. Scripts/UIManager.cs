@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.UI;
 using static GV;
@@ -44,11 +45,9 @@ public void UIManagerInit(int slot, int stage, int blessing) {
 
     public void ShowGameSetUI() {
         _gamesetUI.transform.GetChild(0).GetComponent<Text>().text = 
-            "초월 단계: " + _cardManager.GetGameGrade() + "단계";
+            "초월 등급: " + _cardManager.GetGameGrade() + "등급";
         _gamesetUI.transform.GetChild(1).GetComponent<Text>().text = 
             "사용 금액: " + _cardManager.GetTotalCost().ToString();
-        
-
         _gamesetUI.SetActive(true);
     }
 

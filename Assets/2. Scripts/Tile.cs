@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static GV;
 
 public class Tile : MonoBehaviour {
@@ -13,11 +14,15 @@ public class Tile : MonoBehaviour {
     private Renderer _renderer;
     private int _index;
     private ETileType _type;
+    private ETileType[] _exceptTile;
+    private ECardType[] _exceptCard;
 
     public void TileInit(int index, ETileType type) {
         _tileManager = GameObject.Find("TileManager").GetComponent<TileManager>();
         _cardManager = GameObject.Find("CardManager").GetComponent<CardManager>();
         _renderer = gameObject.GetComponent<Renderer>();
+        _exceptTile = new[] { ETileType.norm, ETileType.spec };
+        _exceptCard = new[] { ECardType.resonance, ECardType.purification };
         _index = index;
         _type = type;
         _renderer.material = _materials[(int)type];
@@ -52,10 +57,10 @@ public class Tile : MonoBehaviour {
                 _tileManager.AddBrokens(_index);
                 _type = ETileType.brok;
                 //_renderer.material = _materials[(int)_type]; 
-                _renderer.enabled = false;//특수 타일 효과 추가
+                _renderer.enabled = false; //특수 타일 효과 추가
                 break;
             case ETileType.dist:
-                if(new[] { ECardType.purification, ECardType.resonance }.Contains(selectedCardType)) {
+                if(_exceptCard.Contains(selectedCardType)) {
                     _tileManager.AddBrokens(_index);
                     _type = ETileType.brok;
                     //_renderer.material = _materials[(int)_type];
@@ -71,8 +76,11 @@ public class Tile : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        if(_cardManager.IsCardSelected() && (_type == ETileType.norm || _type == ETileType.spec)) //정화 추가
-            _tileManager.BreakTiles(_index);
+        if(_cardManager.IsCardSelected()) {
+            if(_exceptTile.Contains(_type) || _exceptCard.Contains(_cardManager.GetSelectedCard()._type)) {
+                _tileManager.BreakTiles(_index);
+            }
+        }
     }
     public ETileType GetTileType() {
         return _type;

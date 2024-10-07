@@ -45,18 +45,65 @@ public class GV {
             { "resonance", "°ø¸í" }
         };
         _breakProbabilities = new Dictionary<ECardType, List<float>> {
-            { ECardType.hellfire, new List<float> { 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f} },
-            { ECardType.explosion, new List<float> { 0.85f, 0.85f, 0.85f, 0.85f, 0.7f, 0.7f, 0.7f, 0.7f, 0.55f, 0.55f, 0.55f, 0.55f, 0.4f, 0.4f, 0.4f, 0.4f, 0.25f, 0.25f, 0.25f, 0.25f, 0.1f, 0.1f, 0.1f, 0.1f } },
-            { ECardType.lightning, new List<float> { 1f, 1f, 1f, 1f, 1f, 1f, 1f } },
-            { ECardType.thunderbolt, new List<float> { 0.5f, 0.5f, 0.5f, 0.5f } },
-            { ECardType.whirlwind, new List<float> { 0.5f, 0.5f, 0.5f, 0.5f } },
-            { ECardType.shockwave, new List<float> { 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f} },
-            { ECardType.earthquake, new List<float> { 0.85f, 0.85f, 0.7f, 0.7f, 0.55f, 0.55f, 0.4f, 0.4f, 0.25f, 0.25f, 0.1f, 0.1f } },
-            { ECardType.sunami, new List<float> { 0.85f, 0.85f, 0.85f, 0.85f, 0.7f, 0.7f, 0.7f, 0.7f, 0.55f, 0.55f, 0.55f, 0.55f, 0.4f, 0.4f, 0.4f, 0.4f, 0.25f, 0.25f, 0.25f, 0.25f, 0.1f, 0.1f, 0.1f, 0.1f } },
-            { ECardType.storm, new List<float> { 0.85f, 0.85f, 0.7f, 0.7f, 0.55f, 0.55f, 0.4f, 0.4f, 0.25f, 0.25f, 0.1f, 0.1f } },
-            { ECardType.purification, new List<float> { 0.5f, 0.5f } },
-            { ECardType.eruption, new List<float> { } },
-            { ECardType.resonance, new List<float> { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f } }
+            { 
+                ECardType.hellfire, new List<float> { 
+                    0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f
+                } 
+            },
+            { 
+                ECardType.explosion, new List<float> { 
+                    0.85f, 0.85f, 0.85f, 0.85f, 0.7f, 0.7f, 0.7f, 0.7f, 0.55f, 0.55f, 0.55f, 0.55f, 
+                    0.4f, 0.4f, 0.4f, 0.4f, 0.25f, 0.25f, 0.25f, 0.25f, 0.1f, 0.1f, 0.1f, 0.1f 
+                } 
+            },
+            { 
+                ECardType.lightning, new List<float> { 
+                    1f, 1f, 1f, 1f, 1f, 1f, 1f 
+                } 
+            },
+            { 
+                ECardType.thunderbolt, new List<float> { 
+                    0.5f, 0.5f, 0.5f, 0.5f 
+                } 
+            },
+            { 
+                ECardType.whirlwind, new List<float> { 
+                    0.5f, 0.5f, 0.5f, 0.5f 
+                } 
+            },
+            { 
+                ECardType.shockwave, new List<float> { 
+                    0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f
+                } 
+            },
+            { 
+                ECardType.earthquake, new List<float> { 
+                    0.85f, 0.7f, 0.55f, 0.4f, 0.25f, 0.1f, 0f, 0.85f, 0.7f, 0.55f, 0.4f, 0.25f, 0.1f, 0f
+                } 
+            },
+            { 
+                ECardType.sunami, new List<float> {
+                    0.85f, 0.7f, 0.55f, 0.4f, 0.25f, 0.1f, 0f, 0.85f, 0.7f, 0.55f, 0.4f, 0.25f, 0.1f, 0f, 
+                    0.85f, 0.7f, 0.55f, 0.4f, 0.25f, 0.1f, 0f, 0.85f, 0.7f, 0.55f, 0.4f, 0.25f, 0.1f, 0f  
+                } 
+            },
+            { 
+                ECardType.storm, new List<float> {
+                    0.85f, 0.7f, 0.55f, 0.4f, 0.25f, 0.1f, 0f, 0.85f, 0.7f, 0.55f, 0.4f, 0.25f, 0.1f, 0f
+                } 
+            },
+            { 
+                ECardType.purification, new List<float> { 
+                    0.5f, 0.5f 
+                } 
+            },
+            { 
+                ECardType.eruption, new List<float> { } },
+            { 
+                ECardType.resonance, new List<float> { 
+                    1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f 
+                } 
+            }
         };
     }
     public float[] GetBreakProbabilities(ECardType type) {
@@ -318,98 +365,17 @@ public class GV {
             new List<ETileType>() // 3-0
             {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
                 ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
+                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
             new List<ETileType>() // 3-1
             {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
-            },
-            new List<ETileType>() // 3-2
-            {
-                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
-            },
-            new List<ETileType>() // 3-3
-            {
-                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
-                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
-            },
-            new List<ETileType>() // 3-4
-            {
-                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
-                ETileType.none, ETileType.none, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
-            },
-            new List<ETileType>() // 3-5
-            {
-                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
-                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
-                ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
-                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none
-            },
-            new List<ETileType>() // 3-6
-            {
-                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
-                ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm,
-                ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
-                ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none
-            }
-        },
-        new List<List<ETileType>> // 4
-        {
-            new List<ETileType> // 4-0
-            {
-                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
-                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
-            },
-            new List<ETileType> // 4-1
-            {
-                ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
-                ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
                 ETileType.none, ETileType.norm, ETileType.dist, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
                 ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
                 ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
@@ -417,7 +383,7 @@ public class GV {
                 ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 4-2
+            new List<ETileType>() // 3-2
             {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
@@ -428,7 +394,7 @@ public class GV {
                 ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 4-3
+            new List<ETileType>() // 3-3
             {
                 ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
                 ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
@@ -439,7 +405,7 @@ public class GV {
                 ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 4-4
+            new List<ETileType>() // 3-4
             {
                 ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
                 ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm,
@@ -450,7 +416,7 @@ public class GV {
                 ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 4-5
+            new List<ETileType>() // 3-5
             {
                 ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
                 ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
@@ -461,7 +427,7 @@ public class GV {
                 ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
                 ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm
             },
-            new List<ETileType> // 4-6
+            new List<ETileType>() // 3-6
             {
                 ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm,
                 ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm,
@@ -473,9 +439,9 @@ public class GV {
                 ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm
             }
         },
-        new List<List<ETileType>> // 5
+        new List<List<ETileType>> // 4
         {
-            new List<ETileType> // 5-0
+            new List<ETileType> // 4-0
             {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
@@ -486,7 +452,7 @@ public class GV {
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 5-1
+            new List<ETileType> // 4-1
             {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
@@ -497,7 +463,7 @@ public class GV {
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 5-2
+            new List<ETileType> // 4-2
             {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
@@ -508,7 +474,7 @@ public class GV {
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 5-3
+            new List<ETileType> // 4-3
             {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
@@ -519,7 +485,7 @@ public class GV {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 5-4
+            new List<ETileType> // 4-4
             {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none,
@@ -530,7 +496,7 @@ public class GV {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 5-5
+            new List<ETileType> // 4-5
             {
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
@@ -541,7 +507,7 @@ public class GV {
                 ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 5-6
+            new List<ETileType> // 4-6
             {
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none,
@@ -553,9 +519,9 @@ public class GV {
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none
             }
         },
-        new List<List<ETileType>> // 6
+        new List<List<ETileType>> // 5
         {
-            new List<ETileType> // 6-0
+            new List<ETileType> // 5-0
             {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
@@ -566,7 +532,7 @@ public class GV {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 6-1
+            new List<ETileType> // 5-1
             {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
@@ -577,7 +543,7 @@ public class GV {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 6-2
+            new List<ETileType> // 5-2
             {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
@@ -588,7 +554,7 @@ public class GV {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 6-3
+            new List<ETileType> // 5-3
             {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.none, ETileType.none,
@@ -599,7 +565,7 @@ public class GV {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 6-4
+            new List<ETileType> // 5-4
             {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.none, ETileType.none,
@@ -610,8 +576,8 @@ public class GV {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 6-5
-            {
+            new List<ETileType> // 5-5
+                            {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.none,
@@ -621,7 +587,7 @@ public class GV {
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none
             },
-            new List<ETileType> // 6-6
+            new List<ETileType> // 5-6
             {
                 ETileType.none, ETileType.none, ETileType.none, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none, ETileType.none,
                 ETileType.none, ETileType.none, ETileType.norm, ETileType.dist, ETileType.norm, ETileType.norm, ETileType.none, ETileType.none,
