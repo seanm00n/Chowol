@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static GV;
 
@@ -11,15 +12,15 @@ public class CardManager : MonoBehaviour {
     private int _swapChances;
     private int _gameChances;
     private int _totalCost;
-    private List<Card> _cards;
-    private System.Random _rand;
-    private UIManager _uimanager;
     private bool _isSelect;
     private int _selectedCardIndex;
-    private AudioSource _audioSource;
     private int _gameGrade;
+    private List<Card> _cards;
     private List<List<int>> _gameChanceDictionary;
+    private System.Random _rand;
+    private UIManager _uimanager;
     private GameManager _gameManager;
+    private AudioSource _audioSource;
 
     public  void CardManagerInit(int slot, int stage, int blessing) {
         _audioSource = GetComponent<AudioSource>();
@@ -69,7 +70,7 @@ public class CardManager : MonoBehaviour {
         SendCardData();
     }
 
-    public void ChangeCard(int index) { // 카드 스왑
+    public void SwapCard(int index) { // 카드 스왑
         if(_swapChances > 0) {
             _swapChances -= 1;
             //DeselectCard();
@@ -105,6 +106,9 @@ public class CardManager : MonoBehaviour {
     }
     public Card GetSelectedCard() {
         return _cards[_selectedCardIndex];
+    }
+    public int GetSelectedCardIndex() {
+        return _selectedCardIndex;
     }
     public bool IsCardSelected() {
         return _isSelect;
@@ -160,6 +164,29 @@ public class CardManager : MonoBehaviour {
                 5, 5, 5, 5, 5, 8, 8
             }
         };
+    }
+    public void SetSwapChances(int value) {
+        _swapChances += value;
+    }
+
+    public void SetGameChances(int value) {
+        _gameChances += value;
+    }
+    public void MystiqueActivate() {
+        int targetIndex = _selectedCardIndex == 0 ? 1 : 0;
+        List<ECardType> tmp = new List<ECardType> { ECardType.eruption, ECardType.resonance };
+        int randIndex = _rand.Next(tmp.Count);
+        ECardType randType = tmp[randIndex];
+        ECardRank randRank = randType == ECardType.eruption ? ECardRank.first : ECardRank.third;
+        _cards[targetIndex] = new Card(randRank, randType);
+    }
+    public void EnhancementActivate() {
+        int targetIndex = _selectedCardIndex == 0 ? 1 : 0;
+        _cards[targetIndex]._rank += 1;
+    }
+    public void DuplicationActivate() {
+        int targetIndex = _selectedCardIndex == 0 ? 1 : 0;
+        _cards[targetIndex] = _cards[_selectedCardIndex];
     }
 }
 

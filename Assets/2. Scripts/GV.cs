@@ -28,6 +28,11 @@ public class GV {
     {
         none, norm, spec, dist, brok
     }
+    public enum EEffectType {
+        none, relocation, blessing, addition, mystique, enhancement, duplication
+        //    재배치      축복      추가      신비      강화          복제
+    }
+
 
     private static void DictionaryInit() {
         _dictionary = new Dictionary<string, string> {
@@ -53,7 +58,7 @@ public class GV {
             { 
                 ECardType.explosion, new List<float> { 
                     0.85f, 0.85f, 0.85f, 0.85f, 0.7f, 0.7f, 0.7f, 0.7f, 0.55f, 0.55f, 0.55f, 0.55f, 
-                    0.4f, 0.4f, 0.4f, 0.4f, 0.25f, 0.25f, 0.25f, 0.25f, 0.1f, 0.1f, 0.1f, 0.1f 
+                    0.4f, 0.4f, 0.4f, 0.4f, 0.25f, 0.25f, 0.25f, 0.25f, 0.1f, 0.1f, 0.1f, 0.1f, 0f, 0f, 0f, 0f
                 } 
             },
             { 

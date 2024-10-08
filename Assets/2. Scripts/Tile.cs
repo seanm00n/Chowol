@@ -14,6 +14,7 @@ public class Tile : MonoBehaviour {
     private Renderer _renderer;
     private int _index;
     private ETileType _type;
+    private EEffectType _effectType;
     private ETileType[] _exceptTile;
     private ECardType[] _exceptCard;
 
@@ -25,6 +26,7 @@ public class Tile : MonoBehaviour {
         _exceptCard = new[] { ECardType.resonance, ECardType.purification };
         _index = index;
         _type = type;
+        _effectType = EEffectType.none;
         _renderer.material = _materials[(int)type];
         if(_type == ETileType.none) {
             _renderer.enabled = false;
@@ -33,38 +35,34 @@ public class Tile : MonoBehaviour {
 
     public void SetTileType(ETileType type) {
         _type = type;
+        _renderer.material = _materials[(int)type];
         if(_type == ETileType.norm) {
             _renderer.enabled = true;
         }
-        _renderer.material = _materials[(int)type];
         if(_type == ETileType.brok) {
             _renderer.enabled = false;
         }
     }
 
     public void BreakTile() {// 타입 변경, 색상 변경, 옵션 발동 등 추가
-        ECardType selectedCardType = _cardManager.GetSelectedCard()._type;//?
+        ECardType selectedCardType = _cardManager.GetSelectedCard()._type;
         switch(_type) {
             case ETileType.none:
                 break;
             case ETileType.norm:
                 _tileManager.AddBrokens(_index);
-                _type = ETileType.brok;
-                //_renderer.material = _materials[(int)_type];
-                _renderer.enabled = false;
+                SetTileType(ETileType.brok);
                 break;
             case ETileType.spec:
                 _tileManager.AddBrokens(_index);
-                _type = ETileType.brok;
-                //_renderer.material = _materials[(int)_type]; 
-                _renderer.enabled = false; //특수 타일 효과 추가
+                SetTileType(ETileType.brok);
+                _tileManager.SpecialTileBreak(_effectType);
+                SetEffectType(EEffectType.none);
                 break;
             case ETileType.dist:
                 if(_exceptCard.Contains(selectedCardType)) {
                     _tileManager.AddBrokens(_index);
-                    _type = ETileType.brok;
-                    //_renderer.material = _materials[(int)_type];
-                    _renderer.enabled = false;
+                    SetTileType(ETileType.brok);
                     break; 
                 } else {
                     _tileManager.DistortionBreak();
@@ -84,5 +82,9 @@ public class Tile : MonoBehaviour {
     }
     public ETileType GetTileType() {
         return _type;
+    }
+    public void SetEffectType(EEffectType effectType) {
+        _effectType = effectType;
+        _renderer.material = _materials[(int)effectType + 4];
     }
 }
