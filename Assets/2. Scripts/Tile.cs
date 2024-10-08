@@ -9,6 +9,9 @@ public class Tile : MonoBehaviour {
     [SerializeField]
     Material[] _materials;
 
+    [SerializeField]
+    Material[] _smaterials;
+
     private TileManager _tileManager;
     private CardManager _cardManager;
     private Renderer _renderer;
@@ -56,7 +59,6 @@ public class Tile : MonoBehaviour {
             case ETileType.spec:
                 _tileManager.AddBrokens(_index);
                 SetTileType(ETileType.brok);
-                _tileManager.SpecialTileBreak(_effectType);
                 SetEffectType(EEffectType.none);
                 break;
             case ETileType.dist:
@@ -83,8 +85,11 @@ public class Tile : MonoBehaviour {
     public ETileType GetTileType() {
         return _type;
     }
+    public EEffectType GetEffectType() {
+        return _effectType;
+    }
     public void SetEffectType(EEffectType effectType) {
         _effectType = effectType;
-        _renderer.material = _materials[(int)effectType + 4];
+        _renderer.material = _smaterials[(int)effectType];
     }
 }

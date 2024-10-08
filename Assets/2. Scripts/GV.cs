@@ -33,7 +33,6 @@ public class GV {
         //    재배치      축복      추가      신비      강화          복제
     }
 
-
     private static void DictionaryInit() {
         _dictionary = new Dictionary<string, string> {
             { "hellfire", "업화" },

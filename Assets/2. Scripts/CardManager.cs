@@ -57,17 +57,13 @@ public class CardManager : MonoBehaviour {
 
     public void UseCard() { // 사용한 카드를 배열에서 지운 뒤 카드 하나 생성해 배열에 추가
         _gameChances -= 1;
-        //게임이 종료됬으면 단계 계산을 멈춰야함
-        if(!_gameManager.GetIsGameSet()) {
-            CalcGameGrade();
-        }
         _totalCost += 140;
         _cards[_selectedCardIndex] = _cards[2];
         _cards.RemoveAt(2);
         CreateCard();
         UpgradCard();
         //DeselectCard();
-        SendCardData();
+        //SendCardData();
     }
 
     public void SwapCard(int index) { // 카드 스왑

@@ -85,10 +85,11 @@ public class TileManager : MonoBehaviour {
         if(IsGameSet()) {
             return;
         }
+        _cardManager.CalcGameGrade();
+        _cardManager.SendCardData();
 
         if(_speciaTileIndex != -1) { // 안 부서졌을 시 복구
             _tiles[_speciaTileIndex].SetTileType(ETileType.norm);
-            _tiles[_speciaTileIndex].SetEffectType(EEffectType.none);
         }
         
         int randIndex = _rand.Next(_availTiles.Count);
@@ -124,7 +125,7 @@ public class TileManager : MonoBehaviour {
                 tmp[i].BreakTile();
             }
         }
-
+        SpecialTileBreak(_tiles[target].GetEffectType());
         _audioSource.Play();
         _cardManager.UseCard();
         CreateSpec();
@@ -251,7 +252,6 @@ public class TileManager : MonoBehaviour {
             case EEffectType.none:
                 break;
             case EEffectType.relocation: // 재배치 되기 전에 게임종료 조건에 걸려버림
-                Debug.Log("relocation activated");
                 int availCount = _availTiles.Count;
                 int distCount = _distTiles.Count;
                 List<int> newAvailTiles = new List<int>();
@@ -259,9 +259,6 @@ public class TileManager : MonoBehaviour {
                 List<int> newBrokenTiles = new List<int>();
 
                 List<int> notNone = new List<int>(_availTiles.Concat(_distTiles).Concat(_brokenTiles));
-                Debug.Log("_availTiles.count: " + _availTiles.Count);
-                Debug.Log("notNone.Count: " + notNone.Count);
-
                 for(int i = 0; i < notNone.Count; ++i) {
                     int randIndex = _rand.Next(notNone.Count);
                     int randTile = notNone[randIndex];
@@ -280,7 +277,6 @@ public class TileManager : MonoBehaviour {
                     }
                     notNone.Remove(randTile);
                 }
-                Debug.Log("newAvailTiles.Count: " + newAvailTiles.Count);
                 _availTiles = newAvailTiles;
                 _distTiles = newDistTiles;
                 _brokenTiles = newBrokenTiles;
@@ -301,6 +297,5 @@ public class TileManager : MonoBehaviour {
                 _cardManager.DuplicationActivate();
                 break;
         }
-
     }
 }
