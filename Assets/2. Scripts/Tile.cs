@@ -48,8 +48,9 @@ public class Tile : MonoBehaviour {
             case ETileType.spec:
                 _gameManager.AddBrokens(_index);
                 SetTileType(ETileType.brok);
-                SetEffectType(EEffectType.none);
                 SetMaterial((int)ETileType.brok);
+                _gameManager.SpceiclTileActivate(_effectType);
+                
                 break;
             case ETileType.dist:
                 if(_exceptCard.Contains(selectedCardType)) {

@@ -22,6 +22,7 @@ public class MenuControl : MonoBehaviour
     private string[] _slotType;
 
     private void Awake() {
+        DictionaryInit();
         _slotType = new string[] { "투 구", "견 갑", "상 의", "하 의", "장 갑", "무 기" };
         _slot = 1;
         _stage = 1;

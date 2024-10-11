@@ -28,25 +28,25 @@ public class GameManager : MonoBehaviour {
     private int _gameGrade;
     private int _gameChances;
     private int _swapChances;
-    private int? _speciaTileIndex;
-
-    private System.Random _rand;
+    private int _speciaTileIndex;
+    private int _selectedCardIndex;
     private string[] _slotType;
+    private System.Random _rand;
     private Card _selectedCard;
     private List<int> _availTiles;
     private List<int> _brokenTiles;
     private List<int> _distTiles;
     private List<Card> _cards;
-    private List<List<int>> _gameChanceDictionary;
+    private SoundManager _soundManager;
     private ECardType[] _exceptCard;
 
     private void Awake() {
         _slot = MenuControl.GetSlot();
         _stage = MenuControl.GetStage();
         _blessing = MenuControl.GetBlessing();
-
-        _speciaTileIndex = null;
         _selectedCard = null;
+        _selectedCardIndex = -1;
+        _speciaTileIndex = -1;
         _totalCost = 0;
         _gameGrade = 3;
         _rand = new System.Random();
@@ -55,25 +55,27 @@ public class GameManager : MonoBehaviour {
         _distTiles = new List<int>();
         _cards = new List<Card>();
         _exceptCard = new[] { ECardType.resonance, ECardType.purification };
-        UIInit(_slot, _stage, _blessing); // 순서 주의
-        TileInit(_slot, _stage, _blessing);
-        CardInit(_slot, _stage, _blessing);
+        _soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+        UIInit();
+        TileInit();
+        CardInit();
+        UIUpdate(_cards);
     }
 
-    private void UIInit(int slot, int stage, int blessing) {
+    private void UIInit() {
         _gamesetUI.SetActive(false);
         for(int i = 0; i < 5; ++i) {
             _queues[i].QueueInit();
         }
         _slotType = new string[] { "투구", "견갑", "상의", "하의", "장갑", "무기" };
         _uITexts[3].text = 
-            _slotType[slot] + " " + (stage + 1) + "단계 초월 진행 중 \r\n" +
-            "엘조윈의 가호 " + blessing + "단계 적용 중";
+            _slotType[_slot] + " " + (_stage + 1) + "단계 초월 진행 중 \r\n" +
+            "엘조윈의 가호 " + _blessing + "단계 적용 중";
     }
 
-    private void TileInit(int slot, int stage, int blessing) {
+    private void TileInit() {
         List<ETileType> tmp = new List<ETileType>();
-        tmp = GV.Instance._dpTile[slot][stage];
+        tmp = GV.Instance._dpTile[_slot][_stage];
 
         for(int i = 0; i < 64; ++i) {
             _tiles[i].TileInit(i, tmp[i]);
@@ -84,7 +86,7 @@ public class GameManager : MonoBehaviour {
                 _distTiles.Add(i);
             }
         }
-        for(int j = 0; j < blessing; ++j) {
+        for(int j = 0; j < _blessing; ++j) {
             if(_distTiles.Count > 0) {
                 int randIndex = _rand.Next(_distTiles.Count);
                 int randTile = _distTiles[randIndex];
@@ -95,9 +97,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void CardInit(int slot, int stage, int blessing) {
+    private void CardInit() {
         _swapChances = 2 + _blessing;
-        _gameChances = _gameChanceDictionary[slot][stage];
+        _gameChances = GV.Instance.GetGameChances(_slot, _stage);
         for(int i = 0; i < 5; ++i) {
             CreateCard();
         }
@@ -108,42 +110,84 @@ public class GameManager : MonoBehaviour {
     /*---------------------------------- default method -----------------------------------*/
     //
     public void OnCardClick(int selectedQueueIndex) {
-        CancelOutline(selectedQueueIndex);
+        int remainCardIndex = selectedQueueIndex == 0 ? 1 : 0;
+        CancelOutline(remainCardIndex);
         _selectedCard = _cards[selectedQueueIndex];
-        SoundManager.Instance.PlayCardSelect();
+        _selectedCardIndex = selectedQueueIndex;
+        _soundManager.PlayCardSelect();
     }
 
     public void OnTileClick(int _selectedTileIndex) {
-        // 타일 부수고
         BreakTiles(_selectedTileIndex);
-        // 타일 사운드 재생
-        _audioSource.Play(); //
-        // 특수 타일 효과 발동
-        SpecialTileBreak(_tiles[selectedTileIndex].GetEffectType());
-        // 카드 사용
-        _cardManager.UseCard();
-        // 특수 타일 생성
-        CreateSpec();
-        // 카드 선택 취소
+        _soundManager.PlayTileBreak();
+        UseCard();
+        CreateSpecialTile();
+        CancelOutline(_selectedCardIndex);
         _selectedCard = null;
+        _selectedCardIndex = -1;
+
+        if(IsGameSet()) {
+            ShowGameSetUI();
+        } else {
+            CalcGameGrade();
+        }
+
+        UIUpdate(_cards);
     }
 
     public void OnLeftButtonClick() {
-        // 카드 선택 취소
-        // 카드 추가
-        // 카드 업글
-        // 사운드 재생
+        if(_swapChances > 0) { 
+            _selectedCard = null;
+            _selectedCardIndex = -1;
+            SwapCard(0);
+            _soundManager.PlayCardSwap();
+            _swapChances -= 1;
+            CancelOutline(0);
+            UIUpdate(_cards);
+        }
     }
 
     public void OnRightButtonClick() {
-        // 카드 선택 취소
-        // 카드 추가
-        // 카드 업글
-        // 사운드 재생
+        if(_swapChances > 0) {
+            _selectedCard = null;
+            _selectedCardIndex = -1;
+            SwapCard(1);
+            _soundManager.PlayCardSwap();
+            _swapChances -= 1;
+            CancelOutline(1);
+            UIUpdate(_cards);
+        }
     }
 
     public void OnStageSelectButtonClick() {
         SceneManager.LoadScene("MenuScene");
+    }
+
+    private bool IsGameSet() {
+        if(_availTiles.Count == 0) {
+            Debug.Log("Game Set");
+            return true;
+        }
+        return false;
+    }
+
+    public void CalcGameGrade() {
+        if(_gameChances <= 0) {
+            if(_gameGrade > 0) {
+                _gameGrade--;
+                _gameChances += (_gameGrade == 1) ? 2 : 1;
+            }
+        }
+    }
+
+    private void Shuffle(List<int> tiles) { // Fisher-Yates 알고리즘
+        for(int i = tiles.Count - 1; i > 0; i--) {
+            int j = _rand.Next(i + 1);
+            
+            int temp = tiles[i];
+            tiles[i] = tiles[j];
+            tiles[j] = temp;
+        }
     }
     //
     /*-------------------------------------------------------------------------------------*/
@@ -172,6 +216,7 @@ public class GameManager : MonoBehaviour {
             }
         }
     }
+
     public List<Tile> GetNeighborTiles(int selectedTile, Card selectedCard) {
         List<Tile> result = new List<Tile>();
         HashSet<int> breakableTiles = new HashSet<int>(_availTiles.Concat(_distTiles).Distinct());
@@ -272,6 +317,26 @@ public class GameManager : MonoBehaviour {
         return result;
     }
 
+    private void CreateSpecialTile() {
+        if(_speciaTileIndex != -1) { // 안 부서졌을 시 복구
+            _tiles[_speciaTileIndex].SetTileType(ETileType.norm);
+            _tiles[_speciaTileIndex].SetMaterial((int)ETileType.norm);
+        }
+
+        int randIndex = _rand.Next(_availTiles.Count);
+        int randTile = _availTiles[randIndex];
+        _speciaTileIndex = randTile;
+        _tiles[_speciaTileIndex].SetTileType(ETileType.spec);
+
+        List<EEffectType> effectTypes = Enum.GetValues(typeof(EEffectType)).Cast<EEffectType>().ToList();
+        effectTypes.Remove(EEffectType.none);
+        randIndex = _rand.Next(effectTypes.Count);
+        EEffectType randEffect = effectTypes[randIndex];
+        _tiles[_speciaTileIndex].SetEffectType(randEffect);
+        _tiles[_speciaTileIndex].SetMaterial((int)randEffect);
+        Debug.Log("effect: " + randEffect);
+    }
+
     // 조건에 맞는지 확인하고 타일 추가
     private void AddTileIfValid(List<Tile> listToAdd, int selectedTile, int[] neighbors, Func<int, bool> condition) {
         foreach(int i in neighbors) {
@@ -282,6 +347,64 @@ public class GameManager : MonoBehaviour {
                 listToAdd.Add(null);
             }
         }
+    }
+
+    public void SpceiclTileActivate(EEffectType effectType) {
+        int remainCardIndex = _selectedCardIndex == 0 ? 1 : 0;
+        int randIndex = 0;
+        switch(effectType) {
+            case EEffectType.none:
+                break;
+            case EEffectType.relocation:
+                int availCount = _availTiles.Count;
+                int distCount = _distTiles.Count;
+                List<int> newAvailTiles = new List<int>();
+                List<int> newDistTiles = new List<int>();
+                List<int> newBrokenTiles = new List<int>();
+                List<int> notNoneTiles = new List<int>(_availTiles.Concat(_distTiles).Concat(_brokenTiles));
+                Shuffle(notNoneTiles);
+                while(notNoneTiles.Count > 0) { // 잘 섞이는데 UI 표기가 잘못된듯
+                    randIndex = _rand.Next(notNoneTiles.Count);
+                    int randTile = notNoneTiles[randIndex];
+                    if(availCount > 0) {
+                        availCount--;
+                        newAvailTiles.Add(randTile);
+                        _tiles[randTile].SetTileType(ETileType.norm);
+                    } else if(distCount > 0) {
+                        distCount--;
+                        newDistTiles.Add(randTile);
+                        _tiles[randTile].SetTileType(ETileType.dist);
+                    } else {
+                        newBrokenTiles.Add(randTile);
+                        _tiles[randTile].SetTileType(ETileType.brok);
+                    }
+                    notNoneTiles.Remove(randTile);
+                }
+                _availTiles = newAvailTiles;
+                _distTiles = newDistTiles;
+                _brokenTiles = newBrokenTiles;
+                break;
+            case EEffectType.blessing:
+                _gameChances += 1;
+                break;
+            case EEffectType.addition:
+                _swapChances += 1;
+                break;
+            case EEffectType.mystique:
+                List<ECardType> mysticCards = new List<ECardType> { ECardType.eruption, ECardType.resonance };
+                randIndex = _rand.Next(mysticCards.Count);
+                ECardType randType = mysticCards[randIndex];
+                ECardRank randRank = randType == ECardType.eruption ? ECardRank.first : ECardRank.third;
+                _cards[remainCardIndex] = new Card(randRank, randType);
+                break;
+            case EEffectType.enhancement:
+                _cards[remainCardIndex]._rank += 1;
+                break;
+            case EEffectType.duplication:
+                _cards[remainCardIndex] = _cards[_selectedCardIndex];
+                break;
+        }
+        _speciaTileIndex = -1;
     }
 
     public void AddBrokens(int index) {
@@ -310,8 +433,29 @@ public class GameManager : MonoBehaviour {
     /*--------------------------------- UI related method ---------------------------------*/
     //
     public void CancelOutline(int index) { // 다른 카드의 외곽선을 취소
-        int target = (index == 0) ? 1 : 0;
-        _queues[target].SetOutline(false);
+        _queues[index].SetOutline(false);
+    }
+
+    public void UIUpdate(List<Card> cards) { //수정
+
+        for(int i = 0; i < 5; ++i) {
+            _queues[i].QueueUpdate(cards[i], i);
+        }
+        if(_gameGrade > 0) {
+            _uITexts[0].text = _gameChances + "회 이내에 초월 성공 시 " + _gameGrade + "등급 " + "달성";
+        } else {
+            _uITexts[0].text = "";
+        }
+        _uITexts[1].text = "정령 교체 \r\n" + _swapChances + "회 가능";
+        _uITexts[2].text = "사용 금액: " + _totalCost;
+    }
+
+    public void ShowGameSetUI() {
+        _gamesetUI.SetActive(true);
+        _gamesetUI.transform.GetChild(0).GetComponent<Text>().text =
+            "초월 등급: " + _gameGrade + "등급";
+        _gamesetUI.transform.GetChild(1).GetComponent<Text>().text =
+            "사용 금액: " + _totalCost;
     }
     //
     /*-------------------------------------------------------------------------------------*/
@@ -332,10 +476,6 @@ public class GameManager : MonoBehaviour {
         ECardType randCard = availableCards[_rand.Next(availableCards.Count)];
         Card tmpCard = new Card(ECardRank.first, randCard);
         _cards.Add(tmpCard);
-    }
-
-    public void DeselectCard() { // 선택 상태 취소
-        _selectedCard = null;
     }
 
     private void UpgradCard() { // 중복카드 업그레이드
@@ -360,6 +500,22 @@ public class GameManager : MonoBehaviour {
 
     public Card GetSelectedCard() {
         return _selectedCard;
+    }
+
+    public void UseCard() { // 사용한 카드를 배열에서 지운 뒤 카드 하나 생성해 배열에 추가
+        _gameChances -= 1;
+        _totalCost += 140;
+        _cards[_selectedCardIndex] = _cards[2];
+        _cards.RemoveAt(2);
+        CreateCard();
+        UpgradCard();
+    }
+
+    public void SwapCard(int index) { // 카드 스왑
+        _cards[index] = _cards[2];
+        _cards.RemoveAt(2);
+        CreateCard();
+        UpgradCard();
     }
     //
     /*-------------------------------------------------------------------------------------*/

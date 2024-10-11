@@ -17,6 +17,7 @@ public class GV {
 
     private static Dictionary<string, string> _dictionary;
     private static Dictionary<ECardType, List<float>> _breakProbabilities;
+    private static List<List<int>> _gameChanceDictionary;
     public enum ECardRank { // CardUpgrade에서 필요함
         first = 1, second, third
     }
@@ -33,7 +34,7 @@ public class GV {
         //    재배치      축복      추가      신비      강화          복제
     }
 
-    private static void DictionaryInit() {
+    public static void DictionaryInit() {
         _dictionary = new Dictionary<string, string> {
             { "hellfire", "업화" },
             { "explosion", "대폭발" },
@@ -109,6 +110,26 @@ public class GV {
                 } 
             }
         };
+        _gameChanceDictionary = new List<List<int>> {
+            new List<int> { // 투구
+                7, 7, 7, 8, 8, 11, 11
+            },
+            new List<int> { // 어께
+                7, 7, 7, 10, 10, 13, 13
+            },
+            new List<int> { // 상의
+                5, 5, 5, 5, 5, 8, 8
+            },
+            new List<int> { //하의
+                7, 7, 7, 10, 10, 13, 13
+            },
+            new List<int> { // 장갑
+                7, 7, 7, 8, 8, 11, 11
+            },
+            new List<int> { // 무기
+                5, 5, 5, 5, 5, 8, 8
+            }
+        };
     }
     public float[] GetBreakProbabilities(ECardType type) {
         return _breakProbabilities[type].ToArray();
@@ -121,6 +142,9 @@ public class GV {
         } else {
             return "null";
         }
+    }
+    public int GetGameChances(int slot, int stage) {
+        return _gameChanceDictionary[slot][stage];
     }
     public List<List<List<ETileType>>> _dpTile = new List<List<List<ETileType>>>
     {
