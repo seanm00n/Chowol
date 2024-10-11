@@ -18,22 +18,20 @@ public class Queue : MonoBehaviour, IPointerClickHandler {
     private Text _text;
     private Card _card;
     private int _index;
-    private CardManager _cardManager;
-    private UIManager _uiManager;
+    private GameManager _gameManager;
     private Image _backImg;
     private Image _cardImg;
     private Outline _outline;
 
     public void QueueInit() {
-        _cardManager = GameObject.Find("CardManager").GetComponent<CardManager>();
-        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _cardImg = transform.Find("Image").GetComponent<Image>();
+        _text = transform.Find("QText").GetComponent<Text>();
         _outline = GetComponent<Outline>();
+        _backImg = GetComponent<Image>();
         if(_outline != null) {
             SetOutline(false);
         }
-        _text = transform.Find("QText").GetComponent<Text>();
-        _backImg = GetComponent<Image>();
-        _cardImg = transform.Find("Image").GetComponent<Image>();
     }
 
     public void QueueUpdate(Card card, int index) {
@@ -44,14 +42,13 @@ public class Queue : MonoBehaviour, IPointerClickHandler {
         _cardImg.sprite = _cardImgFiles[(int)card._type];
 
     }
-    public void OnPointerClick(PointerEventData e) {
+    public void OnPointerClick(PointerEventData e) { // 카드 클릭 시 이벤트
         if(_index < 2) {
-            _cardManager.SelectCard(_index);
-            _uiManager.SelectQueue(_index);
+            _gameManager.OnCardClick(_index);
             SetOutline(true); 
         }
     }
-    public void SetOutline(bool set) {
+    public void SetOutline(bool set) { // 외곽선 선택 효과
         if(_outline != null) {
             _outline.enabled = set;
         }

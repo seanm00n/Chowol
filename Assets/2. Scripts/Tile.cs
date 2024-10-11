@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static GV;
@@ -12,8 +13,7 @@ public class Tile : MonoBehaviour {
     [SerializeField]
     Material[] _smaterials;
 
-    private TileManager _tileManager;
-    private CardManager _cardManager;
+    private GameManager _gameManager;
     private Renderer _renderer;
     private int _index;
     private ETileType _type;
@@ -22,8 +22,7 @@ public class Tile : MonoBehaviour {
     private ECardType[] _exceptCard;
 
     public void TileInit(int index, ETileType type) {
-        _tileManager = GameObject.Find("TileManager").GetComponent<TileManager>();
-        _cardManager = GameObject.Find("CardManager").GetComponent<CardManager>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _renderer = gameObject.GetComponent<Renderer>();
         _exceptTile = new[] { ETileType.norm, ETileType.spec };
         _exceptCard = new[] { ECardType.resonance, ECardType.purification };
@@ -36,38 +35,30 @@ public class Tile : MonoBehaviour {
         }
     }
 
-    public void SetTileType(ETileType type) {
-        _type = type;
-        _renderer.material = _materials[(int)type];
-        if(_type == ETileType.norm) {
-            _renderer.enabled = true;
-        }
-        if(_type == ETileType.brok) {
-            _renderer.enabled = false;
-        }
-    }
-
     public void BreakTile() {// 타입 변경, 색상 변경, 옵션 발동 등 추가
-        ECardType selectedCardType = _cardManager.GetSelectedCard()._type;
+        ECardType selectedCardType = _gameManager.GetSelectedCard()._type;
         switch(_type) {
             case ETileType.none:
                 break;
             case ETileType.norm:
-                _tileManager.AddBrokens(_index);
+                _gameManager.AddBrokens(_index);
                 SetTileType(ETileType.brok);
+                SetMaterial((int)ETileType.brok);
                 break;
             case ETileType.spec:
-                _tileManager.AddBrokens(_index);
+                _gameManager.AddBrokens(_index);
                 SetTileType(ETileType.brok);
                 SetEffectType(EEffectType.none);
+                SetMaterial((int)ETileType.brok);
                 break;
             case ETileType.dist:
                 if(_exceptCard.Contains(selectedCardType)) {
-                    _tileManager.AddBrokens(_index);
+                    _gameManager.AddBrokens(_index);
                     SetTileType(ETileType.brok);
+                    SetMaterial((int)ETileType.brok);
                     break; 
                 } else {
-                    _tileManager.DistortionBreak();
+                    _gameManager.DistortionBreak();
                 }
                 break;
             case ETileType.brok:
@@ -76,20 +67,39 @@ public class Tile : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        if(_cardManager.IsCardSelected()) {
-            if(_exceptTile.Contains(_type) || _exceptCard.Contains(_cardManager.GetSelectedCard()._type)) {
-                _tileManager.BreakTiles(_index);
+        if(_gameManager.IsCardSelected()) {
+            if(_exceptTile.Contains(_type) || _exceptCard.Contains(_gameManager.GetSelectedCard()._type)) {
+                _gameManager.OnTileClick(_index);
             }
         }
     }
+
     public ETileType GetTileType() {
         return _type;
+    }
+    public void SetTileType(ETileType type) {
+        _type = type;
+
     }
     public EEffectType GetEffectType() {
         return _effectType;
     }
     public void SetEffectType(EEffectType effectType) {
         _effectType = effectType;
-        _renderer.material = _smaterials[(int)effectType];
+    }
+    public void SetMaterial(int type) {
+        if(_type != ETileType.spec) {
+            _renderer.material = _materials[(int)type];
+        } else {
+            _renderer.material = _smaterials[(int)type];
+        }
+
+        if(_type == ETileType.norm) {
+            _renderer.enabled = true;
+        }
+
+        if(_type == ETileType.brok) {
+            _renderer.enabled = false;
+        }
     }
 }
