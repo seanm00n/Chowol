@@ -120,19 +120,17 @@ public class GameManager : MonoBehaviour {
     public void OnTileClick(int _selectedTileIndex) {
         BreakTiles(_selectedTileIndex);
         _soundManager.PlayTileBreak();
-        UseCard();
-        CreateSpecialTile();
-        CancelOutline(_selectedCardIndex);
-        _selectedCard = null;
-        _selectedCardIndex = -1;
-
         if(IsGameSet()) {
             ShowGameSetUI();
         } else {
-            CalcGameGrade();
+            CalcGameGrade(); // 종료 조건 확인과 등급계산 확인
+            UseCard();
+            CreateSpecialTile();
+            CancelOutline(_selectedCardIndex);
+            _selectedCard = null;
+            _selectedCardIndex = -1;
+            UIUpdate(_cards);
         }
-
-        UIUpdate(_cards);
     }
 
     public void OnLeftButtonClick() {
@@ -370,13 +368,16 @@ public class GameManager : MonoBehaviour {
                         availCount--;
                         newAvailTiles.Add(randTile);
                         _tiles[randTile].SetTileType(ETileType.norm);
+                        _tiles[randTile].SetMaterial((int)ETileType.norm);
                     } else if(distCount > 0) {
                         distCount--;
                         newDistTiles.Add(randTile);
                         _tiles[randTile].SetTileType(ETileType.dist);
+                        _tiles[randTile].SetMaterial((int)ETileType.dist);
                     } else {
                         newBrokenTiles.Add(randTile);
                         _tiles[randTile].SetTileType(ETileType.brok);
+                        _tiles[randTile].SetMaterial((int)ETileType.brok);
                     }
                     notNoneTiles.Remove(randTile);
                 }
