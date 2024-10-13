@@ -18,7 +18,3 @@
 <사운드>
 - smilegate RPG
 - https://gongu.copyright.or.kr/gongu/wrt/wrt/view.do?wrtSn=13252439&menuNo=200020
-
-# Tasks
-- 리팩터링
-- relocation tile break 왜곡타일 줄어드는 현상 수정
