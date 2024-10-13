@@ -1,6 +1,5 @@
 # Chowol
-- "Chowol"은 MMORPG 게임 "로스트 아크"의 초월 시스템을 유니티로 구현한 시뮬레이션 프로젝트입니다.
-- 이 프로젝트는 강화 시스템의 작동 방식을 이해하기 위해 만들었습니다.
+- "Chowol"은 MMORPG 게임 "로스트 아크"의 초월 시스템을 유니티로 구현한 시뮬레이션 모작입니다.
 ![02](https://github.com/user-attachments/assets/0a1f127e-6a7b-4c29-baf3-19138f7b4d9f)
 
 # 주요 기능
