@@ -14,9 +14,5 @@
 - https://gongu.copyright.or.kr/gongu/wrt/wrt/view.do?wrtSn=13252439&menuNo=200020
 
 # Tasks
-<구현>
-
-<수정>
 - 리팩터링
-
-<에러>
+- relocation tile break 왜곡타일 줄어드는 현상 수정

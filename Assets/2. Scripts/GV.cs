@@ -18,7 +18,7 @@ public class GV {
     private static Dictionary<string, string> _dictionary;
     private static Dictionary<ECardType, List<float>> _breakProbabilities;
     private static List<List<int>> _gameChanceDictionary;
-    public enum ECardRank { // CardUpgrade에서 필요함
+    public enum ECardRank { // 1부터 시작해야함
         first = 1, second, third
     }
     public enum ECardType {

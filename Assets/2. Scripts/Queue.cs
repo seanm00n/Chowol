@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,13 +35,12 @@ public class Queue : MonoBehaviour, IPointerClickHandler {
         }
     }
 
-    public void QueueUpdate(Card card, int index) {
+    public void QueueUpdate(Card card, int index) { // UI 업데이트
         _card = card;
         _index = index;
         _text.text = card._name;
         _backImg.sprite = _cardBackImgFiles[(int)card._rank - 1];
         _cardImg.sprite = _cardImgFiles[(int)card._type];
-
     }
     public void OnPointerClick(PointerEventData e) { // 카드 클릭 시 이벤트
         if(_index < 2) {
@@ -53,5 +53,4 @@ public class Queue : MonoBehaviour, IPointerClickHandler {
             _outline.enabled = set;
         }
     }
-
 }

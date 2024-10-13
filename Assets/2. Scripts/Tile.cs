@@ -35,31 +35,27 @@ public class Tile : MonoBehaviour {
         }
     }
 
-    public void BreakTile() {// 타입 변경, 색상 변경, 옵션 발동 등 추가
+    public void BreakTile() {// 타일 부수고 수정
         ECardType selectedCardType = _gameManager.GetSelectedCard()._type;
         switch(_type) {
             case ETileType.none:
                 break;
             case ETileType.norm:
                 _gameManager.AddBrokens(_index);
-                SetTileType(ETileType.brok);
-                SetMaterial((int)ETileType.brok);
+                SetTileType(ETileType.brok, EEffectType.none);
                 break;
             case ETileType.spec:
                 _gameManager.AddBrokens(_index);
-                SetTileType(ETileType.brok);
-                SetMaterial((int)ETileType.brok);
-                _gameManager.SpceiclTileActivate(_effectType);
-                
+                _gameManager.SetSpecialTileEffectType(_effectType);//
+                SetTileType(ETileType.brok, EEffectType.none);
                 break;
             case ETileType.dist:
                 if(_exceptCard.Contains(selectedCardType)) {
                     _gameManager.AddBrokens(_index);
-                    SetTileType(ETileType.brok);
-                    SetMaterial((int)ETileType.brok);
+                    SetTileType(ETileType.brok, EEffectType.none);
                     break; 
                 } else {
-                    _gameManager.DistortionBreak();
+                    _gameManager.SetDistortionActivateCount(1);
                 }
                 break;
             case ETileType.brok:
@@ -78,29 +74,24 @@ public class Tile : MonoBehaviour {
     public ETileType GetTileType() {
         return _type;
     }
-    public void SetTileType(ETileType type) {
+    public void SetTileType(ETileType type, EEffectType etype) { // 타입, 특수효과, 머테리얼 변경
         _type = type;
+        _effectType = etype;
 
-    }
-    public EEffectType GetEffectType() {
-        return _effectType;
-    }
-    public void SetEffectType(EEffectType effectType) {
-        _effectType = effectType;
-    }
-    public void SetMaterial(int type) {
         if(_type != ETileType.spec) {
             _renderer.material = _materials[(int)type];
         } else {
-            _renderer.material = _smaterials[(int)type];
-        }
-
-        if(_type == ETileType.norm) {
-            _renderer.enabled = true;
+            _renderer.material = _smaterials[(int)etype];
         }
 
         if(_type == ETileType.brok) {
             _renderer.enabled = false;
+        } else {
+            _renderer.enabled = true;
         }
+
+    }
+    public EEffectType GetEffectType() {
+        return _effectType;
     }
 }
