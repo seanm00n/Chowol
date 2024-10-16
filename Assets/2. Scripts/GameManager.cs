@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -88,7 +90,6 @@ public class GameManager : MonoBehaviour {
             }
         }
         for(int j = 0; j < _blessing; ++j) {
-            Debug.Log("blessing: " + _blessing);
             if(_distTiles.Count > 0) {
                 int randIndex = _rand.Next(_distTiles.Count);
                 int randTile = _distTiles[randIndex];
@@ -97,12 +98,11 @@ public class GameManager : MonoBehaviour {
                 _availTiles.Add(randTile);
             }
         }
-        Debug.Log("dist tiles: " + _distTiles.Count);
     }
 
     private void CardInit() {
         DeselectCard();
-        _swapChances = 2 + _blessing;
+        _swapChances = 200 + _blessing;
         _gameChances = GV.Instance.GetGameChances(_slot, _stage);
         for(int i = 0; i < 5; ++i) {
             CreateCard();
@@ -120,17 +120,18 @@ public class GameManager : MonoBehaviour {
         _soundManager.PlayCardSelect();
     }
 
-    public void OnTileClick(int _selectedTileIndex) { // 카드 선택 후 타일 클릭 시 동작
+    public IEnumerator OnTileClick(int _selectedTileIndex) { // 카드 선택 후 타일 클릭 시 동작
         _totalCost += 140;
         _soundManager.PlayTileBreak();
         BreakTiles(_selectedTileIndex);
+        Debug.Log(String.Join(",", _distTiles));
+        yield return new WaitForSeconds(0.2f);
         DistortionBreak();
-
         if(IsGameSet()) {
             ShowGameSetUI();
-            return;
+            yield break;
         }
-
+        yield return new WaitForSeconds(0.2f);
         SpceiclTileActivate(_specialTileEffect);
         CalcGameGrade();
         UseCard();
@@ -168,7 +169,6 @@ public class GameManager : MonoBehaviour {
 
     private bool IsGameSet() {
         if(_availTiles.Count == 0) {
-            Debug.Log("Game Set");
             return true;
         }
         return false;
@@ -201,7 +201,8 @@ public class GameManager : MonoBehaviour {
             }
             float randomValue = UnityEngine.Random.value;
             if(_selectedCard._rank == ECardRank.third) {
-                if(neighborTiles[i].GetTileType() != ETileType.dist || _exceptCard.Contains(_selectedCard._type)) {
+                if(neighborTiles[i].GetTileType() != ETileType.dist || 
+                    _exceptCard.Contains(_selectedCard._type)) {
                     neighborTiles[i].BreakTile();
                 }
             } else if(_selectedCard._rank == ECardRank.second) {
@@ -218,12 +219,35 @@ public class GameManager : MonoBehaviour {
         Func<int, bool> condition;
 
         switch(selectedCard._type) {
-            case ECardType.hellfire: // 사각&십자모양
+            case ECardType.thunderbolt: // 작은 십자
                 condition = (neighborTile) =>
-                    (neighborTile >= 0 && neighborTile < _tiles.Length && breakableTiles.Contains(neighborTile));
+                    (neighborTile >= 0 && neighborTile < _tiles.Length &&
+                    Mathf.Abs((neighborTile / 8) - (selectedTile / 8)) <= 4 &&
+                    Mathf.Abs((neighborTile % 8) - (selectedTile % 8)) <= 4);
+                AddTileIfValid(result, selectedTile, new[] { 1, 8, -1, -8 }, condition);
+                break;
+            case ECardType.shockwave: // 3*3 네모
+                condition = (neighborTile) =>
+                    (neighborTile >= 0 && neighborTile < _tiles.Length &&
+                    Mathf.Abs((neighborTile / 8) - (selectedTile / 8)) <= 4 &&
+                    Mathf.Abs((neighborTile % 8) - (selectedTile % 8)) <= 4);
+                AddTileIfValid(result, selectedTile, new[] { 1, 9, 8, 7, -1, -9, -8, -7 }, condition);
+                break;
+            case ECardType.whirlwind: // 작은 x자
+                condition = (neighborTile) =>
+                    (neighborTile >= 0 && neighborTile < _tiles.Length &&
+                    (Math.Abs((selectedTile / 8) - (neighborTile / 8)) == 1 && 
+                    Math.Abs((selectedTile % 8) - (neighborTile % 8)) == 1));
+                AddTileIfValid(result, selectedTile, new[] { 9, 7, -9, -7 }, condition);
+                break;
+            case ECardType.hellfire: // 사각+십자모양
+                condition = (neighborTile) =>
+                                        (neighborTile >= 0 && neighborTile < _tiles.Length &&
+                    Mathf.Abs((neighborTile / 8) - (selectedTile / 8)) <= 4 &&
+                    Mathf.Abs((neighborTile % 8) - (selectedTile % 8)) <= 4);
                 AddTileIfValid(result, selectedTile, new[] { 1, 9, 8, 7, -1, -9, -8, -7, 2, 16, -2, -16 }, condition);
                 break;
-            case ECardType.explosion: // x모양 전부 //수정
+            case ECardType.explosion: // x모양 전부
                 condition = (neighborTile) =>
                     (neighborTile >= 0 && neighborTile < _tiles.Length &&
                     (Math.Abs((selectedTile / 8) - (neighborTile / 8)) == Math.Abs((selectedTile % 8) - (neighborTile % 8))));
@@ -259,23 +283,6 @@ public class GameManager : MonoBehaviour {
                     }
                 }
                 break;
-            case ECardType.thunderbolt: // 작은 십자
-                condition = (neighborTile) =>
-                    (neighborTile >= 0 && neighborTile < _tiles.Length &&
-                    (selectedTile / 8 == neighborTile / 8 || selectedTile % 8 == neighborTile % 8));
-                AddTileIfValid(result, selectedTile, new[] { 1, 8, -1, -8 }, condition);
-                break;
-            case ECardType.whirlwind: // 작은 x자
-                condition = (neighborTile) =>
-                    (neighborTile >= 0 && neighborTile < _tiles.Length &&
-                    (Math.Abs((selectedTile / 8) - (neighborTile / 8)) == 1 && Math.Abs((selectedTile % 8) - (neighborTile % 8)) == 1)); // 대각선 체크
-                AddTileIfValid(result, selectedTile, new[] { 9, 7, -9, -7 }, condition);
-                break;
-            case ECardType.shockwave: // 9*9 네모
-                condition = (neighborTile) =>
-                    (neighborTile >= 0 && neighborTile < _tiles.Length);
-                AddTileIfValid(result, selectedTile, new[] { 1, 9, 8, 7, -1, -9, -8, -7 }, condition);
-                break;
             case ECardType.earthquake: // 가로 전부
                 condition = (neighborTile) =>
                     (neighborTile >= 0 && neighborTile < _tiles.Length && (selectedTile / 8 == neighborTile / 8));
@@ -296,16 +303,19 @@ public class GameManager : MonoBehaviour {
             case ECardType.purification: // 왼쪽 오른쪽 하나씩
                 condition = (neighborTile) =>
                     (neighborTile >= 0 && neighborTile < _tiles.Length &&
-                    (neighborTile == selectedTile + 1 || neighborTile == selectedTile - 1));
+                    (neighborTile == selectedTile + 1 || neighborTile == selectedTile - 1) &&
+                    (selectedTile % 8 != 0 || (selectedTile + 1) % 8 != 0)) &&
+                    (selectedTile % 8 != 0 || neighborTile != selectedTile - 1) &&
+                    (selectedTile % 8 != 7 || neighborTile != selectedTile + 1);
                 AddTileIfValid(result, selectedTile, new[] { 1, -1 }, condition);
                 break;
             case ECardType.eruption: // 필요 없음
                 break;
             case ECardType.resonance: // 상하좌우 2개씩
                 condition = (neighborTile) =>
-                    (neighborTile >= 0 && neighborTile < _tiles.Length &&
-                    (Math.Abs(neighborTile - selectedTile) == 1 || Math.Abs(neighborTile - selectedTile) == 8 ||
-                    Math.Abs(neighborTile - selectedTile) == 2 || Math.Abs(neighborTile - selectedTile) == 16));
+                                    (neighborTile >= 0 && neighborTile < _tiles.Length &&
+                    Mathf.Abs((neighborTile / 8) - (selectedTile / 8)) <= 4 && 
+                    Mathf.Abs((neighborTile % 8) - (selectedTile % 8)) <= 4);
                 AddTileIfValid(result, selectedTile, new[] { 1, 2, 8, 16, -1, -2, -8, -16 }, condition);
                 break;
         }
@@ -329,8 +339,8 @@ public class GameManager : MonoBehaviour {
         Debug.Log("effect: " + randEffect);
     }
 
-    // 조건에 맞는 타일 배열에 추가
-    private void AddTileIfValid(List<Tile> listToAdd, int selectedTile, int[] neighbors, Func<int, bool> condition) {
+    
+    private void AddTileIfValid(List<Tile> listToAdd, int selectedTile, int[] neighbors, Func<int, bool> condition) { // 조건에 맞는 타일 배열에 추가
         foreach(int i in neighbors) {
             int neighborTile = selectedTile + i;
             if(condition(neighborTile)) {
@@ -354,6 +364,9 @@ public class GameManager : MonoBehaviour {
                 int availCount = _availTiles.Count;
                 int distCount = _distTiles.Count;
                 int brokenCount = _brokenTiles.Count;
+                List<int> newAvailTiles = new List<int>();
+                List<int> newDistTiles = new List<int>();
+                List<int> newBrokenTiles = new List<int>();
                 List<int> notNoneTiles = new List<int>(_availTiles.Concat(_distTiles).Concat(_brokenTiles));
                 while(notNoneTiles.Count > 0) {
                     randIndex = _rand.Next(notNoneTiles.Count);
@@ -361,15 +374,21 @@ public class GameManager : MonoBehaviour {
                     if(availCount > 0) {
                         availCount--;
                         _tiles[randTile].SetTileType(ETileType.norm, EEffectType.none);
+                        newAvailTiles.Add(randTile);
                     } else if(distCount > 0) {
                         distCount--;
                         _tiles[randTile].SetTileType(ETileType.dist, EEffectType.none);
+                        newDistTiles.Add(randTile);
                     } else {
                         brokenCount--;
                         _tiles[randTile].SetTileType(ETileType.brok, EEffectType.none);
+                        newBrokenTiles.Add(randTile);
                     }
                     notNoneTiles.RemoveAt(randIndex);
                 }
+                _availTiles = newAvailTiles;
+                _distTiles = newDistTiles;
+                _brokenTiles = newBrokenTiles;
                 break;
             case EEffectType.blessing:
                 _gameChances += 1;
@@ -414,7 +433,10 @@ public class GameManager : MonoBehaviour {
                 _availTiles.Add(randTile);
             }
         }
-        _distortionActivateCount = 0;
+        if(_distortionActivateCount != 0) {
+            Debug.Log("Distortion tile Activate: " + _distortionActivateCount);
+            _distortionActivateCount = 0;
+        }
     }
 
     public void SetSpecialTileEffectType(EEffectType effectType) {
@@ -511,7 +533,7 @@ public class GameManager : MonoBehaviour {
     }
     public void UseCard() { // 사용한 카드 삭제 후 카드추가
         //_gameChances -= 1;
-        _cards[_selectedCardIndex] = _cards[2];
+        _cards[_selectedCardIndex] = _cards[2];//
         _cards.RemoveAt(2);
         CreateCard();
         UpgradCard();

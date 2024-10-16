@@ -66,7 +66,7 @@ public class Tile : MonoBehaviour {
     private void OnMouseDown() {
         if(_gameManager.IsCardSelected()) {
             if(_exceptTile.Contains(_type) || _exceptCard.Contains(_gameManager.GetSelectedCard()._type)) {
-                _gameManager.OnTileClick(_index);
+                StartCoroutine(_gameManager.OnTileClick(_index));
             }
         }
     }
