@@ -70,7 +70,6 @@ public class Tile : MonoBehaviour {
             }
         }
     }
-
     public ETileType GetTileType() {
         return _type;
     }
