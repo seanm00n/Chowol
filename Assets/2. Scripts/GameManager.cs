@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour {
 
     private void CardInit() {
         DeselectCard();
-        _swapChances = 200 + _blessing;
+        _swapChances = 2 + _blessing;
         _gameChances = GV.Instance.GetGameChances(_slot, _stage);
         for(int i = 0; i < 5; ++i) {
             CreateCard();
