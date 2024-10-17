@@ -124,7 +124,6 @@ public class GameManager : MonoBehaviour {
         _totalCost += 140;
         _soundManager.PlayTileBreak();
         BreakTiles(_selectedTileIndex);
-        Debug.Log(String.Join(",", _distTiles));
         yield return new WaitForSeconds(0.2f);
         DistortionBreak();
         if(IsGameSet()) {
