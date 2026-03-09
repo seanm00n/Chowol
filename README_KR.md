@@ -1,7 +1,7 @@
 🇰🇷 한국어 | 🇺🇸 [English](README.md)
 
 <div align="center">
-  <h2>🎮Drag&Slash Survivor v1.1.2</h2>
+  <h2>🎮Chowol v1.1.1</h2>
   <img src="image/ingameplay.png" alt="ingameplay" />
 </div>
 
@@ -16,7 +16,6 @@
 - [스크린샷 및 플레이 영상](#스크린샷-및-플레이-영상)  
 - [사용 기술 스택](#사용-기술-스택)  
 - [플레이](#플레이)
-- [제작자](#제작자)  
 - [출처](#출처)
   
 ---
@@ -36,6 +35,8 @@
 ## 🕹️ 게임 소개
 
  **Chowol**은 MMORPG 게임 **로스트 아크**의 **초월** 시스템을 유니티로 구현한 시뮬레이션 모작입니다.
+ MMORPG 게임 **LostArk**의 초월 시스템을 유니티로 구현했습니다. 원하는 장비 부위와 초월 단계를 선택하고, 카드와 특수 타일을 활용해 전략을 세우고, 모든 타일을 부수는 퍼즐 게임입니다.
+ 
 
 ---
 
@@ -79,17 +80,11 @@
 ## 🛠️ 사용 기술 스택
 
 - **Unity Engine**: 타일 기반 퍼즐 게임 플레이 구현, Scene 관리
-
 - **Unity UI / Event System**: 카드 UI 및 타일 상호작용 처리
-
 - **Unity Audio System**: 이벤트 기반 사운드 재생
-
 - **C#**: GameManager 중심 게임 상태 관리, 카드 시스템, 타일 로직 구현
-
 - **자료구조**: Array, List, Dictionary, HashSet, Enum, LINQ 활용
-
 - **Design Pattern**: Singleton 패턴 기반 전역 데이터 관리
-
 - **Git**: 버전 관리
 
 ---
@@ -103,21 +98,12 @@
 
 ---
 
-<a name="제작자"></a>
-## 🙌 제작자
-
-- 기획: **Man Jun Han**, **Minseok Seo**
-- 개발: **CheonHyeok Moon**
-- 팀명: **Team Funity**
-
----
-
 <a name="출처"></a>
 ## 📚 출처  
-<시스템>
+**<시스템>**
 - 이 프로젝트는 MMORPG 게임 "로스트 아크"의 "초월 시스템"을 참고하여 개발되었습니다.
 
-<사운드>
+**<사운드>**
 - smilegate RPG
 - https://gongu.copyright.or.kr/gongu/wrt/wrt/view.do?wrtSn=13252439&menuNo=200020
 ---
