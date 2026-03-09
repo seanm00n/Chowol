@@ -101,10 +101,10 @@
 
 <a name="출처"></a>
 ## 📚 출처  
-### 시스템
+### A. 시스템
 - 이 프로젝트는 MMORPG 게임 "로스트 아크"의 "초월 시스템"을 참고하여 개발되었습니다.
 
-### 사운드
+### B. 사운드
 - smilegate RPG
 - https://gongu.copyright.or.kr/gongu/wrt/wrt/view.do?wrtSn=13252439&menuNo=200020
 ---
