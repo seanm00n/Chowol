@@ -69,7 +69,7 @@
 ### 스크린샷
 | ![InGamePlay](images/ingameplay.png) |
 |:--:|
-| 인게임 전투 |
+| 인게임 플레이 |
 
 ### 플레이 영상
 
