@@ -2,7 +2,7 @@
 
 <div align="center">
   <h2>🎮Chowol v1.1.1</h2>
-  <img src="image/titleimage.png" alt="titleimage" />
+  <img src="image/titleimage.png" alt="titleimage" width="900"/>
 </div>
 
 ---
