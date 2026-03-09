@@ -1,3 +1,5 @@
+🇺🇸 English | 🇰🇷 [한국어](README_KR.md)
+
 # Chowol
 - "Chowol"은 MMORPG 게임 "로스트 아크"의 초월 시스템을 유니티로 구현한 시뮬레이션 모작입니다.
 ![02](https://github.com/user-attachments/assets/0a1f127e-6a7b-4c29-baf3-19138f7b4d9f)
