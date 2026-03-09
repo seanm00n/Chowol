@@ -67,7 +67,7 @@
 ## 🖼️ 스크린샷 및 ▶️ 플레이 영상
 
 ### 스크린샷
-| ![InGamePlay](image/ingameplay.png) |
+| <img src="image/ingameplay.png" width="600"> |
 |:--:|
 | 인게임 플레이 |
 
